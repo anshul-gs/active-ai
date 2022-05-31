@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const db = require('./models/index');
+
 app.get('/', (req, res) => {
     res.send('Homepage!');
 })
@@ -35,8 +36,8 @@ app.post('/addtocart', (req, res) => {
         })
 });
 
-const port = process.env.port || 3000;
-app.listen(port, (err) => {
+var port = process.env.port || 3000;
+app.listen(port, '0.0.0.0', (err) => {
     if (err) console.log(err);
     console.log("Server listening on port", port);
 })
