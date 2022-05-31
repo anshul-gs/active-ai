@@ -38,9 +38,12 @@ app.post('/cart', async (req, res) => {
         .then((response) => {
             let j = {
                 "status": "success",
-                "templateCode": "FlightSelection",
-                "payload": "[{\"flightName\":\"Air India\",\"orderNumber\":\"4055467223\",\"displayOrderNumber\":\"7223\",\"first_name\":\"USER11\",\"date\":\"1st May 2022\",\"isActive\":true},{\"flightName\":\"Indigo\",\"orderNumber\":\"45066127770\",\"displayOrderNumber\":\"7770\",\"first_name\":\"USER11\",\"date\":\"24th April 2022\",\"isActive\":true}]",
-                "messageCode": "FlightSelection",
+                "templateCode": "success",
+                "payload": {
+                    "product": "Abc",
+                    "price": 20
+                },
+                "messageCode": "success",
                 "messageParams": [
                     "USER11",
                     "xx5224"
