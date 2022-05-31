@@ -36,8 +36,18 @@ app.post('/cart', async (req, res) => {
     let cart = req.body;
     await db.Cart.create(cart)
         .then((response) => {
+            let j = {
+                "status": "success",
+                "templateCode": "FlightSelection",
+                "payload": "[{\"flightName\":\"Air India\",\"orderNumber\":\"4055467223\",\"displayOrderNumber\":\"7223\",\"first_name\":\"USER11\",\"date\":\"1st May 2022\",\"isActive\":true},{\"flightName\":\"Indigo\",\"orderNumber\":\"45066127770\",\"displayOrderNumber\":\"7770\",\"first_name\":\"USER11\",\"date\":\"24th April 2022\",\"isActive\":true}]",
+                "messageCode": "FlightSelection",
+                "messageParams": [
+                    "USER11",
+                    "xx5224"
+                ]
+            }
             console.log("res from db", response);
-            res.json(response);
+            res.json(j);
         })
         .catch((err) => {
             res.send(err);
