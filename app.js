@@ -30,7 +30,7 @@ app.get('/productlist', (req, res) => {
 })
 
 app.post('/cart', (req, res) => {
-    console.log("in add to cart", req, req.body);
+    console.log("in add to cart", req.body);
     let cart = req.body;
     db.Cart.create(cart)
         .then(() => {
