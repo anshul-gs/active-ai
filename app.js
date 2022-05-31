@@ -33,8 +33,8 @@ app.post('/cart', (req, res) => {
     console.log("in add to cart", req.body);
     let cart = req.body;
     db.Cart.create(cart)
-        .then(() => {
-            res.send("Added to cart");
+        .then((res) => {
+            res.send("Added to cart", res);
         })
         .catch((err) => {
             res.send(err);
