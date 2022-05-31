@@ -30,13 +30,14 @@ app.get('/productlist', (req, res) => {
     res.json(productList);
 })
 
-app.post('/cart', (req, res) => {
+app.post('/cart', async (req, res) => {
     console.log("in add to cart", req.body);
     req.body.userId = userId;
     let cart = req.body;
-    db.Cart.create(cart)
-        .then((res) => {
-            res.send("Added to cart", res);
+    await db.Cart.create(cart)
+        .then((response) => {
+            console.log("res from db", response);
+            res.json(response);
         })
         .catch((err) => {
             res.send(err);
