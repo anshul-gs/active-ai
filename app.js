@@ -46,7 +46,8 @@ app.post('/cart', async (req, res) => {
                     "xx5224"
                 ]
             }
-            console.log("res from db", JSON.parse(JSON.stringify(j)));
+            j = JSON.parse(JSON.stringify(j));
+            console.log("res from db", j);
             res.json(j);
         })
         .catch((err) => {
