@@ -46,7 +46,7 @@ app.post('/cart', async (req, res) => {
                     "xx5224"
                 ]
             }
-            console.log("res from db", response);
+            console.log("res from db", JSON.parse(j));
             res.json(j);
         })
         .catch((err) => {
