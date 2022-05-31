@@ -3,7 +3,8 @@ const app = express();
 const db = require('./models/index');
 const bodyParser = require('body-parser');
 
-
+const userId = parseInt(Math.random() * 1000000);
+console.log(userId)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -31,6 +32,7 @@ app.get('/productlist', (req, res) => {
 
 app.post('/cart', (req, res) => {
     console.log("in add to cart", req.body);
+    req.body.userId = userId;
     let cart = req.body;
     db.Cart.create(cart)
         .then((res) => {
