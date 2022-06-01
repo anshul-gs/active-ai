@@ -45,19 +45,94 @@ app.post('/cart', async (req, res) => {
     await db.Cart.create(cart)
         .then((response) => {
             console.log("response db", response)
+            // let j = {
+            //     "status": "success",
+            //     "templateCode": "success",
+            //     "payload": {
+            //         "product": payload.payloadData.data["product.product"],
+            //         "price": 20
+            //     },
+            //     "messageCode": "success",
+            //     "messageParams": [
+            //         "USER11",
+            //         "xx5224"
+            //     ]
+            // }
             let j = {
-                "status": "success",
-                "templateCode": "success",
-                "payload": {
-                    "product": payload.payloadData.data["product.product"],
-                    "price": 20
-                },
-                "messageCode": "success",
-                "messageParams": [
-                    "USER11",
-                    "xx5224"
-                ]
-            }
+                "messages": [{
+                    "type": "text",
+                    "content": "<text_message>",
+                    "quick_replies": [{
+                        "type": "text",
+                        "title": "Search",
+                        "payload": "<POSTBACK_PAYLOAD>",
+                        "image_url": "http://example.com/img/red.png"
+                    }, {
+                        "type": "location"
+                    }]
+                }, {
+                    "type": "list",
+                    "content": {
+                        "list": [{
+                            "title": "",
+                            "subtitle": "",
+                            "image": "",
+                            "buttons": [{
+                                "title": "",
+                                "type": "<postback|weburl|>",
+                                "webview_type": "<COMPACT,TALL,FULL>",
+                                "auth_required": "",
+                                "life": "",
+                                "payload": "",
+                                "postback": "",
+                                "intent": "",
+                                "extra_payload": "",
+                                "message": ""
+                            }]
+                        }],
+                        "buttons": []
+                    },
+                    "quick_replies": []
+                }, {
+                    "type": "button",
+                    "content": {
+                        "title": "",
+                        "buttons": []
+                    },
+                    "quick_replies": []
+                }, {
+                    "type": "carousel",
+                    "content": [{
+                        "title": "",
+                        "subtitle": "",
+                        "image": "",
+                        "buttons": []
+                    }],
+                    "quick_replies": []
+                }, {
+                    "type": "image",
+                    "content": "",
+                    "quick_replies": []
+                }, {
+                    "type": "video",
+                    "content": "",
+                    "quick_replies": []
+                }, {
+                    "type": "custom",
+                    "content": {}
+                }],
+                "render": "<WEBVIEW|BOT>",
+                "keyboard_state": "<ALPHA|NUM|NONE|HIDE|PWD>",
+                "status": "<SUCCESS|FAILED|TFA_PENDING|TFA_SUCCESS|TFA_FAILURE|PENDING|LOGIN_PENDING>",
+                "expected_entities": [],
+                "extra_data": [],
+                "audit": {
+                    "sub_intent": "",
+                    "step": "",
+                    "transaction_id": "",
+                    "transaction_type": ""
+                }
+            };
             j = JSON.parse(JSON.stringify(j));
             console.log("res from db", j);
             res.json(j);
