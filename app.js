@@ -38,7 +38,6 @@ app.post('/cart', async (req, res) => {
     console.log("payload-----", payload, payload.id);
     console.log("payload2-----", payload.payloadData);
     console.log("payload3-----", payload.payloadData.data);
-    console.log("payload4-----", Object.values(payload.payloadData.data))[0];
     let cart = {
         product: payload.payloadData.data['product.product'],
         price: 20,
