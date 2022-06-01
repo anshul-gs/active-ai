@@ -30,7 +30,7 @@ app.get('/productlist', (req, res) => {
 
 app.post('/cart', async (req, res) => {
     console.log("in add to cart", req.body);
-    let userId = user.id;
+    let userId = req.body.user.id;
     let payload = JSON.parse(JSON.stringify(req.body.payload));
     let cart = {
         product: payload.payloadData.data["product.product"],
