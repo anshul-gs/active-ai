@@ -38,7 +38,7 @@ app.post('/cart', async (req, res) => {
     let userId = req.body.user.id;
     payload = JSON.parse(JSON.stringify(payload));
     let cart = {
-        product: payload.payloadData.data["product.product"],
+        product: payload.payloadData.data['product.product'],
         price: 20,
         userId: userId
     }
