@@ -39,10 +39,10 @@ app.post('/cart', async (req, res) => {
             let j = {
                 "status": "success",
                 "templateCode": "success",
-                "payload": [{
+                "payload": {
                     "product": "Abc",
                     "price": 20
-                }],
+                },
                 "messageCode": "success",
                 "messageParams": [
                     "USER11",
