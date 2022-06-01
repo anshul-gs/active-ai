@@ -7,9 +7,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    let body = JSON.parse(JSON.stringify(req.body));
-    let payload = body.payload;
-    payload = JSON.parse(JSON.stringify(payload));
+    let payload = { "id": "pid.1654068368355:901316919939321", "message": "", "payloadData": { "intent": "qry-product", "data": { "product.product": "Voney - Vegan, Plant Based Honey" } }, "allowMultipleClicks": true, "inTransaction": false, "signature": "2bf45d155d01e3a1d06ab2b313334ae3e9af0912", "langCode": "en" };
+    console.log("-----", payload, payload.id, payload.message, payload.payloadData, payload.payloadData.intent);
     res.send(payload);
 })
 
@@ -36,9 +35,8 @@ app.post('/cart', async (req, res) => {
     let body = JSON.parse(JSON.stringify(req.body));
     let payload = body.request.payload;
     let userId = req.body.user.id;
-    let payloadData = payload.payloadData;
-    console.log("payload-----", payload, payload['id'], payload['signature'], payload['payloadData']);
-    console.log("payload2-----", payload.payloadData, payloadData);
+    console.log("payload-----", payload, payload.id);
+    console.log("payload2-----", payload.payloadData);
     console.log("payload3-----", payload.payloadData.data);
     console.log("payload4-----", Object.values(payload.payloadData.data))[0];
     let cart = {
