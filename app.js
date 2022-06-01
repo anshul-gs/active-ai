@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const db = require('./models/index');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,6 +46,14 @@ app.post('/cart', async (req, res) => {
     await db.Cart.create(cart)
         .then((response) => {
             console.log("response db", response)
+            let j = {
+                "status": "success",
+                "messageCode": "success",
+                "messageParams": [
+                    payload.payloadData.data["product.product"],
+                    "20"
+                ]
+            }
             // let j = {
             //     "status": "success",
             //     "templateCode": "success",
@@ -58,35 +67,35 @@ app.post('/cart', async (req, res) => {
             //         "xx5224"
             //     ]
             // }
-            let j = {
-                "messages": [{
-                    "type": "text",
-                    "content": "Hey!!!!!!!!!!!!!!!!!!!!",
-                    "quick_replies": [{
-                        "type": "text",
-                        "title": "Search",
-                        "payload": {
-                            "product": payload.payloadData.data["product.product"],
-                            "price": 20
-                        },
-                        "image_url": "http://example.com/img/red.png"
-                    }, {
-                        "type": "location"
-                    }]
-                }
-                ],
-                "render": "BOT",
-                "keyboard_state": "ALPHA",
-                "status": "SUCCESS",
-                "expected_entities": [],
-                "extra_data": [],
-                "audit": {
-                    "sub_intent": "",
-                    "step": "",
-                    "transaction_id": "",
-                    "transaction_type": ""
-                }
-            };
+            // let j = {
+            //     "messages": [{
+            //         "type": "text",
+            //         "content": "Hey!!!!!!!!!!!!!!!!!!!!",
+            //         "quick_replies": [{
+            //             "type": "text",
+            //             "title": "Search",
+            //             "payload": {
+            //                 "product": payload.payloadData.data["product.product"],
+            //                 "price": 20
+            //             },
+            //             "image_url": "http://example.com/img/red.png"
+            //         }, {
+            //             "type": "location"
+            //         }]
+            //     }
+            //     ],
+            //     "render": "BOT",
+            //     "keyboard_state": "ALPHA",
+            //     "status": "SUCCESS",
+            //     "expected_entities": [],
+            //     "extra_data": [],
+            //     "audit": {
+            //         "sub_intent": "",
+            //         "step": "",
+            //         "transaction_id": "",
+            //         "transaction_type": ""
+            //     }
+            // };
             j = JSON.parse(JSON.stringify(j));
             console.log("res from db", j);
             res.json(j);
@@ -95,6 +104,26 @@ app.post('/cart', async (req, res) => {
             res.send(err);
         })
 });
+
+app.post('/callagent', async (req, res) => {
+    await axios.post('https://kpi.knowlarity.com/Basic/v1/account/call/makecall', {
+        "k_number": "+911141123562",
+        "agent_number": "+919168162979",
+        "customer_number": "+911141123562",
+        "caller_id": "+911141123562"
+    },
+        {
+            headers: {
+                'Authorization': 'a86d7c03-abb4-11e6-982f-066beb27a027',
+                'x-api-key': 'GesxeTJGz52ReWg8UBb8w7fTtqaCy1107E6bNZmG'
+            }
+        }).then((response) => {
+            res.send("success");
+        }).catch((err) => {
+            throw new Error(err)
+        });
+
+})
 
 var port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', (err) => {
