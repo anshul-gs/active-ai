@@ -31,15 +31,7 @@ app.get('/productlist', (req, res) => {
     res.json(productList);
 })
 
-app.post('/cart', (req, res) => {
-    let j = {
-        "status": "success",
-        "messageCode": "success",
-        "messageParams": [
-            "BQF",
-            "20"
-        ]
-    }
+app.post('/cart', async (req, res) => {
     console.log("in add to cart", req.body);
     let body = JSON.parse(JSON.stringify(req.body));
     let payload = JSON.parse(body.request.payload);
@@ -51,7 +43,7 @@ app.post('/cart', (req, res) => {
         userId: userId
     }
     console.log("cart---", cart)
-    db.Cart.create(cart)
+    await db.Cart.create(cart)
         .then((response) => {
             console.log("response db", response)
             let j = {
@@ -106,14 +98,11 @@ app.post('/cart', (req, res) => {
             // };
             j = JSON.parse(JSON.stringify(j));
             console.log("res from db", j);
-            // res.send(j);
+            res.json(j);
         })
         .catch((err) => {
             res.send(err);
         })
-
-    j = JSON.parse(JSON.stringify(j));
-    res.send(j);
 });
 
 app.post('/callagent', async (req, res) => {
