@@ -53,7 +53,7 @@ app.post('/cart', async (req, res) => {
                     payload.payloadData.data["product.product"],
                     "20"
                 ]
-            };
+            }
             // let j = {
             //     "status": "success",
             //     "templateCode": "success",
@@ -96,6 +96,7 @@ app.post('/cart', async (req, res) => {
             //         "transaction_type": ""
             //     }
             // };
+            j = JSON.parse(JSON.stringify(j));
             console.log("res from db", j);
             res.send(j);
         })
