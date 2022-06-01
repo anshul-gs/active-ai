@@ -35,9 +35,7 @@ app.post('/cart', async (req, res) => {
     let body = JSON.parse(JSON.stringify(req.body));
     let payload = JSON.parse(body.request.payload);
     let userId = req.body.user.id;
-    console.log("payload-----", payload, payload.id);
-    console.log("payload2-----", payload.payloadData);
-    console.log("payload3-----", payload.payloadData.data);
+    console.log("payload-----", payload);
     let cart = {
         product: payload.payloadData.data['product.product'],
         price: 20,
