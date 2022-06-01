@@ -45,7 +45,7 @@ app.post('/cart', async (req, res) => {
                 "status": "success",
                 "templateCode": "success",
                 "payload": {
-                    "product": "Abc",
+                    "product": payload.payloadData.data["product.product"],
                     "price": 20
                 },
                 "messageCode": "success",
