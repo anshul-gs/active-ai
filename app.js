@@ -44,10 +44,10 @@ app.post('/cart', async (req, res) => {
                     "price": 20
                 }],
                 "messageCode": "success",
-                "messageParams": [
-                    "USER11",
-                    "xx5224"
-                ]
+                "messageParams": [{
+                    "product": "Abc",
+                    "price": 20
+                }],
             }
             j = JSON.parse(JSON.stringify(j));
             console.log("res from db", j);
