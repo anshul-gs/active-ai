@@ -106,7 +106,7 @@ app.post('/cart', (req, res) => {
             // };
             j = JSON.parse(JSON.stringify(j));
             console.log("res from db", j);
-            res.send(j);
+            // res.send(j);
         })
         .catch((err) => {
             res.send(err);
