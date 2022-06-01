@@ -37,7 +37,7 @@ app.post('/cart', async (req, res) => {
     let payload = body.request.payload;
     let userId = req.body.user.id;
     payload = JSON.parse(JSON.stringify(payload));
-    console.log("payload-----", payload, payload.id, payload.signature, payload.payloadData);
+    console.log("payload-----", payload, payload['id'], payload['signature'], payload['payloadData']);
     console.log("payload2-----", payload.payloadData);
     console.log("payload3-----", payload.payloadData.data);
     console.log("payload4-----", Object.values(payload.payloadData.data))[0];
