@@ -37,8 +37,10 @@ app.post('/cart', async (req, res) => {
         price: 20,
         userId: userId
     }
+    console.log("cart---", cart)
     await db.Cart.create(cart)
         .then((response) => {
+            console.log("response db", response)
             let j = {
                 "status": "success",
                 "templateCode": "success",
