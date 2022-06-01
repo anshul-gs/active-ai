@@ -75,7 +75,7 @@ app.post('/cart', async (req, res) => {
                     }]
                 }
                 ],
-                "render": "WEBVIEW",
+                "render": "BOT",
                 "keyboard_state": "ALPHA",
                 "status": "SUCCESS",
                 "expected_entities": [],
