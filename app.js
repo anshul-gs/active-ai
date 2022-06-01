@@ -65,7 +65,10 @@ app.post('/cart', async (req, res) => {
                     "quick_replies": [{
                         "type": "text",
                         "title": "Search",
-                        "payload": "<POSTBACK_PAYLOAD>",
+                        "payload": {
+                            "product": payload.payloadData.data["product.product"],
+                            "price": 20
+                        },
                         "image_url": "http://example.com/img/red.png"
                     }, {
                         "type": "location"
