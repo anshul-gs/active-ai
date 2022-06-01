@@ -61,7 +61,7 @@ app.post('/cart', async (req, res) => {
             let j = {
                 "messages": [{
                     "type": "text",
-                    "content": "<text_message>",
+                    "content": "Hey!!!!!!!!!!!!!!!!!!!!",
                     "quick_replies": [{
                         "type": "text",
                         "title": "Search",
@@ -70,60 +70,11 @@ app.post('/cart', async (req, res) => {
                     }, {
                         "type": "location"
                     }]
-                }, {
-                    "type": "list",
-                    "content": {
-                        "list": [{
-                            "title": "",
-                            "subtitle": "",
-                            "image": "",
-                            "buttons": [{
-                                "title": "",
-                                "type": "<postback|weburl|>",
-                                "webview_type": "<COMPACT,TALL,FULL>",
-                                "auth_required": "",
-                                "life": "",
-                                "payload": "",
-                                "postback": "",
-                                "intent": "",
-                                "extra_payload": "",
-                                "message": ""
-                            }]
-                        }],
-                        "buttons": []
-                    },
-                    "quick_replies": []
-                }, {
-                    "type": "button",
-                    "content": {
-                        "title": "",
-                        "buttons": []
-                    },
-                    "quick_replies": []
-                }, {
-                    "type": "carousel",
-                    "content": [{
-                        "title": "",
-                        "subtitle": "",
-                        "image": "",
-                        "buttons": []
-                    }],
-                    "quick_replies": []
-                }, {
-                    "type": "image",
-                    "content": "",
-                    "quick_replies": []
-                }, {
-                    "type": "video",
-                    "content": "",
-                    "quick_replies": []
-                }, {
-                    "type": "custom",
-                    "content": {}
-                }],
-                "render": "<WEBVIEW|BOT>",
-                "keyboard_state": "<ALPHA|NUM|NONE|HIDE|PWD>",
-                "status": "<SUCCESS|FAILED|TFA_PENDING|TFA_SUCCESS|TFA_FAILURE|PENDING|LOGIN_PENDING>",
+                }
+                ],
+                "render": "WEBVIEW",
+                "keyboard_state": "ALPHA",
+                "status": "SUCCESS",
                 "expected_entities": [],
                 "extra_data": [],
                 "audit": {
