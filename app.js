@@ -128,11 +128,22 @@ app.post('/callagent', async (req, res) => {
 
 app.post('/viewcart', async (req, res) => {
     console.log(req.body);
+    let frameResponse = {
+        "status": "success",
+        "messageCode": "success",
+        "messageParams": []
+    }
     await db.Cart.find({
         userId: req.body.user.id,
-    }, null, { limit: 2 })
+    }, null, { limit: 2, sort: { 'created_at': -1 } })
         .then((response) => {
-            console.log("response db", response)
+            console.log("response db", response);
+            for (let i in response) {
+                frameResponse.messageParams.push({
+
+                })
+            }
+
         })
         .catch((err) => {
             throw new Error(err);
