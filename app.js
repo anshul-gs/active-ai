@@ -135,7 +135,7 @@ app.post('/viewcart', async (req, res) => {
     }
     await db.Cart.find({
         userId: req.body.user.id,
-    }, null, { limit: 2, sort: { 'created_at': -1 } })
+    }, null, { limit: 2, sort: { 'createdAt': -1 } })
         .then((response) => {
             console.log("response db", response);
             // for (let i in response) {
