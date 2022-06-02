@@ -124,8 +124,20 @@ app.post('/callagent', async (req, res) => {
         }).catch((err) => {
             throw new Error(err)
         });
-
 })
+
+app.post('/viewcart', async (req, res) => {
+    console.log(req.body);
+    await db.Cart.find({
+        userId: req.body.user.id
+    })
+        .then((response) => {
+            console.log("response db", response)
+        })
+        .catch((err) => {
+            throw new Error(err);
+        })
+});
 
 var port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', (err) => {
