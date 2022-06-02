@@ -130,7 +130,7 @@ app.post('/viewcart', async (req, res) => {
     console.log(req.body);
     await db.Cart.find({
         userId: req.body.user.id,
-    }, { limit: 2 })
+    }, null, { limit: 2 })
         .then((response) => {
             console.log("response db", response)
         })
