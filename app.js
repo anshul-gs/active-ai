@@ -138,11 +138,11 @@ app.post('/viewcart', async (req, res) => {
     }, null, { limit: 2, sort: { 'created_at': -1 } })
         .then((response) => {
             console.log("response db", response);
-            for (let i in response) {
-                frameResponse.messageParams.push({
+            // for (let i in response) {
+            //     frameResponse.messageParams.push({
 
-                })
-            }
+            //     })
+            // }
 
         })
         .catch((err) => {
