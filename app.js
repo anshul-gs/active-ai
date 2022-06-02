@@ -129,8 +129,8 @@ app.post('/callagent', async (req, res) => {
 app.post('/viewcart', async (req, res) => {
     console.log(req.body);
     await db.Cart.find({
-        userId: req.body.user.id
-    })
+        userId: req.body.user.id,
+    }, { limit: 2 })
         .then((response) => {
             console.log("response db", response)
         })
