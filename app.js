@@ -8,9 +8,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    let payload = { "id": "pid.1654068368355:901316919939321", "message": "", "payloadData": { "intent": "qry-product", "data": { "product.product": "Voney - Vegan, Plant Based Honey" } }, "allowMultipleClicks": true, "inTransaction": false, "signature": "2bf45d155d01e3a1d06ab2b313334ae3e9af0912", "langCode": "en" };
-    console.log("-----", payload, payload.id, payload.message, payload.payloadData, payload.payloadData.intent);
-    res.send(payload);
+    res.send("Welcome to Homepage!");
 })
 
 app.get('/productlist', (req, res) => {
@@ -46,7 +44,7 @@ app.post('/cart', async (req, res) => {
     await db.Cart.create(cart)
         .then((response) => {
             console.log("response db", response)
-            let j = {
+            let frameResponse = {
                 "status": "success",
                 "messageCode": "success",
                 "messageParams": [
@@ -54,51 +52,9 @@ app.post('/cart', async (req, res) => {
                     "20"
                 ]
             }
-            // let j = {
-            //     "status": "success",
-            //     "templateCode": "success",
-            //     "payload": {
-            //         "product": payload.payloadData.data["product.product"],
-            //         "price": 20
-            //     },
-            //     "messageCode": "success",
-            //     "messageParams": [
-            //         "USER11",
-            //         "xx5224"
-            //     ]
-            // }
-            // let j = {
-            //     "messages": [{
-            //         "type": "text",
-            //         "content": "Hey!!!!!!!!!!!!!!!!!!!!",
-            //         "quick_replies": [{
-            //             "type": "text",
-            //             "title": "Search",
-            //             "payload": {
-            //                 "product": payload.payloadData.data["product.product"],
-            //                 "price": 20
-            //             },
-            //             "image_url": "http://example.com/img/red.png"
-            //         }, {
-            //             "type": "location"
-            //         }]
-            //     }
-            //     ],
-            //     "render": "BOT",
-            //     "keyboard_state": "ALPHA",
-            //     "status": "SUCCESS",
-            //     "expected_entities": [],
-            //     "extra_data": [],
-            //     "audit": {
-            //         "sub_intent": "",
-            //         "step": "",
-            //         "transaction_id": "",
-            //         "transaction_type": ""
-            //     }
-            // };
-            j = JSON.parse(JSON.stringify(j));
-            console.log("res from db", j);
-            res.json(j);
+            frameResponse = JSON.parse(JSON.stringify(frameResponse));
+            console.log("res from db", frameResponse);
+            res.json(frameResponse);
         })
         .catch((err) => {
             res.send(err);
@@ -120,9 +76,9 @@ app.post('/callagent', async (req, res) => {
                 'x-api-key': 'GesxeTJGz52ReWg8UBb8w7fTtqaCy1107E6bNZmG'
             }
         }).then((response) => {
-            res.send("success");
+            res.send("success", response);
         }).catch((err) => {
-            throw new Error(err)
+            res.send(err);
         });
 })
 
