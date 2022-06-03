@@ -63,7 +63,7 @@ app.post('/cart', async (req, res) => {
 
 app.post('/callagent', async (req, res) => {
     console.log('get call', req.query, req.params, req.body);
-    let callto = req.body.workflow.workflowVariables.sys_person_phone_number_Start;
+    let callto = req.body.workflow.workflowVariables.sys_person_phone_number_ask;
     await axios.post('https://kpi.knowlarity.com/Basic/v1/account/call/makecall', {
         "k_number": "+911141123562",
         "agent_number": "+919168162979",
