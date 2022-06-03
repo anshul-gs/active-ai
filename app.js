@@ -107,6 +107,10 @@ app.post('/viewcart', async (req, res) => {
         })
 });
 
+app.post("/order", async (req, res) => {
+    console.log(req.body);
+})
+
 var port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', (err) => {
     if (err) console.log(err);
