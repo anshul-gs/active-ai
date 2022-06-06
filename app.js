@@ -89,6 +89,13 @@ app.post('/viewcart', async (req, res) => {
         "messageCode": "cartView",
         "messageParams": []
     }
+
+    let newRes = {
+        "status": "success",
+        "templateCode": "cartDetails",
+        "payload": "[{\"flightName\":\"Air India\",\"orderNumber\":\"4055467223\",\"displayOrderNumber\":\"7223\",\"first_name\":\"USER11\",\"date\":\"1st May 2022\",\"isActive\":true},{\"flightName\":\"Indigo\",\"orderNumber\":\"45066127770\",\"displayOrderNumber\":\"7770\",\"first_name\":\"USER11\",\"date\":\"24th April 2022\",\"isActive\":true}]",
+    }
+
     await db.Cart.find({
         userId: req.body.user.id,
     }, null, { limit: 2, sort: { 'createdAt': -1 } })
@@ -98,9 +105,9 @@ app.post('/viewcart', async (req, res) => {
                 frameResponse.messageParams.push(response[i].name);
                 frameResponse.messageParams.push(response[i].price);
             }
-            console.log("response frame", frameResponse)
-            frameResponse = JSON.parse(JSON.stringify(frameResponse));
-            res.json(frameResponse);
+            console.log("newRes", newRes)
+            newRes = JSON.parse(JSON.stringify(newRes));
+            res.json(newRes);
         })
         .catch((err) => {
             throw new Error(err);
