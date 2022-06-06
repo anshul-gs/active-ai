@@ -107,7 +107,7 @@ app.post('/viewcart', async (req, res) => {
                 frameResponse.messageParams.push(response[i].name);
                 frameResponse.messageParams.push(response[i].price);
             }
-            newRes = JSON.stringify(newRes.payload);
+            newRes.payload = JSON.stringify(newRes.payload);
             console.log("newRes", newRes)
             res.send(newRes);
         })
