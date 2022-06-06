@@ -93,7 +93,7 @@ app.post('/viewcart', async (req, res) => {
     let newRes = {
         "status": "success",
         "templateCode": "cartDetails",
-        "payload": "[{\"flightName\":\"Air India\",\"orderNumber\":\"4055467223\",\"displayOrderNumber\":\"7223\",\"first_name\":\"USER11\",\"date\":\"1st May 2022\",\"isActive\":true},{\"flightName\":\"Indigo\",\"orderNumber\":\"45066127770\",\"displayOrderNumber\":\"7770\",\"first_name\":\"USER11\",\"date\":\"24th April 2022\",\"isActive\":true}]",
+        "payload": [{ "name": "anshul" }],
     }
 
     await db.Cart.find({
