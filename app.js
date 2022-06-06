@@ -106,8 +106,8 @@ app.post('/viewcart', async (req, res) => {
                 frameResponse.messageParams.push(response[i].price);
             }
             console.log("newRes", newRes)
-            newRes = JSON.parse(JSON.stringify(newRes));
-            res.json(newRes);
+            // newRes = JSON.parse(JSON.stringify(newRes));
+            res.send(newRes);
         })
         .catch((err) => {
             throw new Error(err);
