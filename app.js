@@ -93,7 +93,9 @@ app.post('/viewcart', async (req, res) => {
     let newRes = {
         "status": "success",
         "templateCode": "cartDetails",
-        "payload": { "name": "anshul" },
+        "payload": {
+            "name": "anshul"
+        }
     }
 
     await db.Cart.find({
