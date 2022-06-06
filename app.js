@@ -86,7 +86,7 @@ app.post('/viewcart', async (req, res) => {
     console.log(req.body);
     let frameResponse = {
         "status": "success",
-        "messageCode": "cart_view",
+        "messageCode": "cartView",
         "messageParams": []
     }
     await db.Cart.find({
