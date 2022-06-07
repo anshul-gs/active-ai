@@ -53,7 +53,7 @@ router.post('/add', async (req, res) => {
                 "messageCode": "success",
                 "messageParams": [
                     payload.payloadData.data["product.product"],
-                    "20"
+                    price
                 ]
             }
             frameResponse = JSON.parse(JSON.stringify(frameResponse));
