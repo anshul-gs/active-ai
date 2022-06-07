@@ -6,26 +6,36 @@ router.post('/view', async (req, res) => {
     console.log("cart get", req.body, req.params, req.query);
     let frameResponse = {
         "status": "success",
-        "messageCode": "cartView",
-        "messageParams": []
+        "templateCode": "cartView",
+        "payload": {
+            "product": [],
+            "total": 0
+        }
     }
 
-    await db.Cart.find({
-        userId: req.body.user.id,
-    }, null, { limit: 5, sort: { 'createdAt': -1 } })
-        .then((response) => {
-            console.log("response db", response);
-            for (let i in response) {
-                frameResponse.messageParams.push(response[i].name);
-                frameResponse.messageParams.push(response[i].price);
-            }
-            frameResponse = JSON.parse(JSON.stringify(frameResponse));
-            console.log("frameResponse", frameResponse)
-            res.send(frameResponse);
-        })
-        .catch((err) => {
-            throw new Error(err);
-        })
+    await db.Cart.aggregate([{
+        $match: { userId: req.body.user.id }
+    }, {
+        $group: {
+            _id: "$name",
+        }
+    },
+    { $sort: { createdAt: -1 } },
+    { $limit: 5 }
+    ]).exec(async (err, response) => {
+        if (err) throw new Error(err);
+        console.log("response db", response);
+        for (let i in response) {
+            frameResponse.payload.product.push({
+                name: response[i].name,
+                price: response[i].price
+            });
+            frameResponse.payload.total = frameResponse.payload.total + response[i].price;
+        }
+        frameResponse.payload = JSON.stringify(frameResponse.payload);
+        console.log("frameResponse", frameResponse);
+        res.send(frameResponse);
+    });
 });
 
 router.post('/add', async (req, res) => {
