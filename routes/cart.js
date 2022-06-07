@@ -32,11 +32,11 @@ router.post('/add', async (req, res) => {
     console.log("cart post", req.body);
     let body = JSON.parse(JSON.stringify(req.body));
     let payload = JSON.parse(body.request.payload);
-    console.log("payload-----", payload);
     let userId = req.body.user.id;
     let price;
     await db.Product.find({ name: payload.payloadData.data['product.product'] })
         .then((productResponse) => {
+            console.log("productResponse", productResponse);
             price = productResponse.price;
         })
     let cart = {
