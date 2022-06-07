@@ -36,8 +36,8 @@ router.post('/add', async (req, res) => {
     let price;
     await db.Product.find({ name: payload.payloadData.data['product.product'] })
         .then((productResponse) => {
-            console.log("productResponse", productResponse);
-            price = productResponse.price;
+            console.log("productResponse", productResponse[0]);
+            price = productResponse[0].price;
         })
     let cart = {
         name: payload.payloadData.data['product.product'],
