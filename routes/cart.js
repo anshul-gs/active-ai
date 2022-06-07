@@ -18,6 +18,7 @@ router.post('/view', async (req, res) => {
     }, {
         $group: {
             _id: "$name",
+            name: { $first: "$name" },
             price: { $first: "$price" },
         }
     },
