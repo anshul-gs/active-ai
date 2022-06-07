@@ -19,6 +19,8 @@ router.post("/", async (req, res) => {
     }, {
         $group: {
             _id: "$name",
+            name: { $first: "$name" },
+            price: { $first: "$price" },
         }
     },
     { $sort: { createdAt: -1 } },
