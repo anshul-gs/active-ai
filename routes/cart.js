@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const db = require('./models/index');
+const db = require('../models/index');
 
-app.get('/viewcart', async (req, res) => {
+router.post('/view', async (req, res) => {
     console.log("cart get", req.body, req.params, req.query);
     let frameResponse = {
         "status": "success",
@@ -12,14 +12,14 @@ app.get('/viewcart', async (req, res) => {
 
     await db.Cart.find({
         userId: req.body.user.id,
-    }, null, { limit: 2, sort: { 'createdAt': -1 } })
+    }, null, { limit: 5, sort: { 'createdAt': -1 } })
         .then((response) => {
             console.log("response db", response);
             for (let i in response) {
                 frameResponse.messageParams.push(response[i].name);
                 frameResponse.messageParams.push(response[i].price);
             }
-            frameResponse = JSON.stringify(frameResponse);
+            frameResponse = JSON.parse(JSON.stringify(frameResponse));
             console.log("frameResponse", frameResponse)
             res.send(frameResponse);
         })
@@ -28,7 +28,7 @@ app.get('/viewcart', async (req, res) => {
         })
 });
 
-app.post('/cart', async (req, res) => {
+router.post('/add', async (req, res) => {
     console.log("cart post", req.body);
     let body = JSON.parse(JSON.stringify(req.body));
     let payload = JSON.parse(body.request.payload);
@@ -39,7 +39,7 @@ app.post('/cart', async (req, res) => {
         price: 20,
         userId: userId
     }
-    console.log("cart---", cart)
+    console.log("cart---", cart);
     await db.Cart.create(cart)
         .then((response) => {
             console.log("response db", response)

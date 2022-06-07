@@ -7,6 +7,7 @@ var OrderSchema = new mongoose.Schema({
             price: String,
         }
     ],
+    total: String,
     userId: String,
 }, { timestamps: true });
 
