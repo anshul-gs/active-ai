@@ -10,4 +10,6 @@ mongoose.connect(url, {
     console.log("Error: cd ", err.message);
 });
 
+module.exports.Product = require('./product');
 module.exports.Cart = require('./cart');
+module.exports.Order = require('./order');
