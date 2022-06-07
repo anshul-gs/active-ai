@@ -31,7 +31,7 @@ router.post('/view', async (req, res) => {
                 name: response[i].name,
                 price: response[i].price
             });
-            frameResponse.payload.total = frameResponse.payload.total + response[i].price;
+            frameResponse.payload.total = frameResponse.payload.total + parseInt(response[i].price);
         }
         frameResponse.payload = JSON.stringify(frameResponse.payload);
         console.log("frameResponse", frameResponse);
