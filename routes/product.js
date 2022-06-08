@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
         "templateCode": "viewProducts",
         "payload": []
     }
-    await db.Product.find({ isGift: req.query.isGift })
+    await db.Product.find({ isGift: req.query.isGift, isSubscription: req.query.isSubscription })
         .then((response) => {
             for (let i in response) {
                 frameResponse.payload.push({
