@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 
-var url = "mongodb+srv://anshul:anshul@cluster0.ojx6a1u.mongodb.net/?retryWrites=true&w=majority";
+var url = process.env.MONGODB_URL;
 mongoose.connect(url, {
     useNewUrlParser: true
 }).then(() => {
