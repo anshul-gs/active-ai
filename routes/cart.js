@@ -46,6 +46,7 @@ router.post('/add', async (req, res) => {
     let payload = JSON.parse(body.request.payload);
     let userId = req.body.user.id;
     let price;
+    console.log("payload", payload)
     await db.Product.find({ name: payload.payloadData.data['product.product'] })
         .then((productResponse) => {
             console.log("productResponse", productResponse[0]);
