@@ -27,12 +27,18 @@ router.post('/view', async (req, res) => {
     ]).exec(async (err, response) => {
         if (err) throw new Error(err);
         console.log("response db", response);
-        for (let i in response) {
+        if (response.length > 0) {
+            for (let i in response) {
+                frameResponse.payload.product.push({
+                    name: response[i].name,
+                    price: "- ($" + response[i].price + ")"
+                });
+                frameResponse.payload.total = frameResponse.payload.total + parseInt(response[i].price);
+            }
+        } else {
             frameResponse.payload.product.push({
-                name: response[i].name,
-                price: "- ($" + response[i].price + ")"
-            });
-            frameResponse.payload.total = frameResponse.payload.total + parseInt(response[i].price);
+                name: "Your Cart is empty. Please add some products."
+            })
         }
         frameResponse.payload = JSON.stringify(frameResponse.payload);
         console.log("frameResponse", frameResponse);
