@@ -27,31 +27,42 @@ router.post("/", async (req, res) => {
     { $limit: 5 }
     ]).exec(async (err, response) => {
         if (err) throw new Error(err);
-        for (let i in response) {
-            order.product.push({
-                name: response[i].name,
-                price: response[i].price
-            });
-            order.total = order.total + parseInt(response[i].price);
+        if (response.length > 0) {
+            for (let i in response) {
+                order.product.push({
+                    name: response[i].name,
+                    price: response[i].price
+                });
+                order.total = order.total + parseInt(response[i].price);
+            }
+            order.userId = req.body.user.id;
+            await db.Order.create(order)
+                .then(async (orderResponse) => {
+                    await db.Cart.deleteMany({ userId: req.body.user.id })
+                        .then((deleteResponse) => {
+                            console.log("deleteResponse", deleteResponse);
+                        })
+                        .catch((err) => {
+                            throw new Error(err);
+                        })
+                    console.log("orderResponse", orderResponse)
+                    frameResponse = JSON.parse(JSON.stringify(frameResponse));
+                    console.log("frameResponse", frameResponse)
+                    res.send(frameResponse);
+                })
+                .catch((err) => {
+                    throw new Error(err);
+                })
+        } else {
+            let failResponse = {
+                "status": "success",
+                "messageCode": "orderFailed",
+                "messageParams": []
+            }
+            failResponse = JSON.parse(JSON.stringify(failResponse));
+            console.log("failResponse", failResponse)
+            res.send(failResponse);
         }
-        order.userId = req.body.user.id;
-        await db.Order.create(order)
-            .then(async (orderResponse) => {
-                await db.Cart.deleteMany({ userId: req.body.user.id })
-                    .then((deleteResponse) => {
-                        console.log("deleteResponse", deleteResponse);
-                    })
-                    .catch((err) => {
-                        throw new Error(err);
-                    })
-                console.log("orderResponse", orderResponse)
-                frameResponse = JSON.parse(JSON.stringify(frameResponse));
-                console.log("frameResponse", frameResponse)
-                res.send(frameResponse);
-            })
-            .catch((err) => {
-                throw new Error(err);
-            })
     })
 });
 
