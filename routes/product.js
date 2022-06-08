@@ -31,7 +31,8 @@ router.post('/', (req, res) => {
         price: req.body.price,
         image: req.body.image,
         desc: req.body.desc,
-        isGift: req.body.isGift
+        isGift: req.body.isGift,
+        isSubscription: req.body.isSubscription
     }
     db.Product.create(product)
         .then((response) => {

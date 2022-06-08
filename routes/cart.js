@@ -49,9 +49,7 @@ router.post('/view', async (req, res) => {
             failResponse = JSON.parse(JSON.stringify(failResponse));
             console.log("failResponse", failResponse)
             res.send(failResponse);
-
         }
-
     });
 });
 
@@ -61,7 +59,18 @@ router.post('/add', async (req, res) => {
     let payload = JSON.parse(body.request.payload);
     let userId = req.body.user.id;
     let price;
-    console.log("payload", payload)
+    console.log("payload", payload);
+
+    let productDefinition;
+    if (payload.payloadData.data['product.product']) {
+        productDefinition = payload.payloadData.data['product.product'];
+    } else if (payload.payloadData.data['product.gift']) {
+        productDefinition = payload.payloadData.data['product.gift'];
+    } else if (payload.payloadData.data['product.subscription']) {
+        productDefinition = payload.payloadData.data['product.subscription']
+    }
+    console.log("productDefinition", productDefinition);
+
     await db.Product.find({ name: payload.payloadData.data['product.product'] })
         .then((productResponse) => {
             console.log("productResponse", productResponse);

@@ -6,6 +6,7 @@ var ProductSchema = new mongoose.Schema({
     image: String,
     desc: String,
     isGift: Boolean,
+    isSubscription: Boolean
 });
 
 module.exports = mongoose.model('Product', ProductSchema);
