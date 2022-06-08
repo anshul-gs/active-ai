@@ -45,6 +45,11 @@ router.post("/", async (req, res) => {
                         .catch((err) => {
                             throw new Error(err);
                         })
+
+                    frameResponse.messageParams.push(orderResponse.total);
+                    for (let i in orderResponse.product) {
+                        frameResponse.messageParams.push(orderResponse.product[i].name);
+                    }
                     console.log("orderResponse", orderResponse)
                     frameResponse = JSON.parse(JSON.stringify(frameResponse));
                     console.log("frameResponse", frameResponse)
