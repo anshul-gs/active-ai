@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
                     for (let i in orderResponse.product) {
                         frameResponse.messageParams.push(orderResponse.product[i].name);
                     }
-                    for (let i in 5) {
+                    for (let i = 0; i < 5; i++) {
                         frameResponse.messageParams.push(" ");
                     }
                     console.log("orderResponse", orderResponse);
