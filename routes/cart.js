@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../models/index');
 
 router.post('/view', async (req, res) => {
-    console.log("cart get", req.body, req.params, req.query);
+    console.log("cart view", req.body);
     let frameResponse = {
         "status": "success",
         "templateCode": "cartView",
@@ -41,7 +41,7 @@ router.post('/view', async (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
-    console.log("cart post", req.body);
+    console.log("cart add", req.body);
     let body = JSON.parse(JSON.stringify(req.body));
     let payload = JSON.parse(body.request.payload);
     let userId = req.body.user.id;
@@ -56,7 +56,7 @@ router.post('/add', async (req, res) => {
         price: price,
         userId: userId
     }
-    console.log("cart---", cart);
+    console.log("cart", cart);
     await db.Cart.create(cart)
         .then((response) => {
             console.log("response db", response)
