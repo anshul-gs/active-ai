@@ -50,7 +50,10 @@ router.post("/", async (req, res) => {
                     for (let i in orderResponse.product) {
                         frameResponse.messageParams.push(orderResponse.product[i].name);
                     }
-                    console.log("orderResponse", orderResponse)
+                    for (let i in 5) {
+                        frameResponse.messageParams.push(" ");
+                    }
+                    console.log("orderResponse", orderResponse);
                     frameResponse = JSON.parse(JSON.stringify(frameResponse));
                     console.log("frameResponse", frameResponse)
                     res.send(frameResponse);
