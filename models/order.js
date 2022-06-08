@@ -5,6 +5,7 @@ var OrderSchema = new mongoose.Schema({
         {
             name: String,
             price: String,
+            quantity: String,
         }
     ],
     total: String,
