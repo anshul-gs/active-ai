@@ -35,14 +35,23 @@ router.post('/view', async (req, res) => {
                 });
                 frameResponse.payload.total = frameResponse.payload.total + parseInt(response[i].price);
             }
+            frameResponse.payload = JSON.stringify(frameResponse.payload);
+            console.log("frameResponse", frameResponse);
+            res.send(frameResponse);
         } else {
-            frameResponse.payload.product.push({
-                name: "Your Cart is empty. Please add some products."
-            })
+            let failResponse = {
+                "status": "success",
+                "messageCode": "cartNull",
+                "messageParams": [
+                    "Your Cart is empty. Please add some products."
+                ]
+            }
+            failResponse = JSON.parse(JSON.stringify(failResponse));
+            console.log("failResponse", failResponse)
+            res.send(failResponse);
+
         }
-        frameResponse.payload = JSON.stringify(frameResponse.payload);
-        console.log("frameResponse", frameResponse);
-        res.send(frameResponse);
+
     });
 });
 
