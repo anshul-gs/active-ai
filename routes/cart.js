@@ -71,13 +71,13 @@ router.post('/add', async (req, res) => {
     }
     console.log("productDefinition", productDefinition);
 
-    await db.Product.find({ name: payload.payloadData.data['product.product'] })
+    await db.Product.find({ name: productDefinition })
         .then((productResponse) => {
             console.log("productResponse", productResponse);
             price = productResponse[0].price;
         })
     let cart = {
-        name: payload.payloadData.data['product.product'],
+        name: productDefinition,
         price: price,
         userId: userId
     }
@@ -89,7 +89,7 @@ router.post('/add', async (req, res) => {
                 "status": "success",
                 "messageCode": "success",
                 "messageParams": [
-                    payload.payloadData.data["product.product"],
+                    productDefinition,
                     price
                 ]
             }
