@@ -49,7 +49,7 @@ router.post('/add', async (req, res) => {
     console.log("payload", payload)
     await db.Product.find({ name: payload.payloadData.data['product.product'] })
         .then((productResponse) => {
-            console.log("productResponse", productResponse[0]);
+            console.log("productResponse", productResponse);
             price = productResponse[0].price;
         })
     let cart = {
