@@ -30,7 +30,7 @@ router.post('/view', async (req, res) => {
         for (let i in response) {
             frameResponse.payload.product.push({
                 name: response[i].name,
-                price: response[i].price
+                price: "- ($" + response[i].price + ")"
             });
             frameResponse.payload.total = frameResponse.payload.total + parseInt(response[i].price);
         }
@@ -66,7 +66,7 @@ router.post('/add', async (req, res) => {
                 "messageCode": "success",
                 "messageParams": [
                     payload.payloadData.data["product.product"],
-                    "- ($" + price + ")"
+                    price
                 ]
             }
             frameResponse = JSON.parse(JSON.stringify(frameResponse));
