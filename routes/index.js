@@ -4,8 +4,6 @@ const axios = require('axios');
 const package = require('../package.json');
 
 router.get('/', (req, res) => {
-    package.scripts.train.run()
-    console.log("here--------", package.scripts.train)
     res.send("Welcome to Meluka Honey - Active Bot!");
 });
 
