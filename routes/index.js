@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const axios = require('axios');
-const package = require('../package.json');
 
 router.get('/', (req, res) => {
     res.send("Welcome to Meluka Honey - Active Bot!");
