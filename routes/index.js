@@ -30,8 +30,8 @@ router.post('/callagent', async (req, res) => {
                 'x-api-key': 'GesxeTJGz52ReWg8UBb8w7fTtqaCy1107E6bNZmG'
             }
         }).then((response) => {
-            console.log("call response", response, response.data);
-            res.status(response.statusCode).send(response.data);
+            console.log("call response", response.data);
+            res.send(response.data);
         }).catch((err) => {
             console.log("call err", err);
             res.send(err);
