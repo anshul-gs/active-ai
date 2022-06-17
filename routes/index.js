@@ -27,7 +27,7 @@ router.post('/callagent', async (req, res) => {
             res.send("success", response);
         }).catch((err) => {
             res.send(err);
-        });
+        })
 });
 
 module.exports = router;
