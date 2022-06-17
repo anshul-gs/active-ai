@@ -10,14 +10,18 @@ router.get('/', (req, res) => {
 router.post('/callagent', async (req, res) => {
     console.log('get call', req.query, req.params, req.body);
     let callto;
+    let from = "+919168162979";
+    if (req.body.from) {
+        from = "+91" + req.body.from;
+    }
     if (req.body.workflow) {
         callto = req.body.workflow.workflowVariables.sys_person_phone_number_ask;
     } else {
-        callto = req.body.to;
+        callto = "+91" + req.body.to;
     }
     await axios.post('https://kpi.knowlarity.com/Basic/v1/account/call/makecall', {
         "k_number": "+911141123562",
-        "agent_number": "+919168162979",
+        "agent_number": from,
         "customer_number": "+91" + callto,
         "caller_id": "+911141123562"
     },
