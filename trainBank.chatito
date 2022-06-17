@@ -1,0 +1,13 @@
+%[findProductsByPrice]('training': '100', 'testing': '100')
+    *[100%] ~[find?] ~[products]
+
+~[find]
+    find
+    i'm looking for
+    help me find
+    show me
+    are there any
+
+~[products]
+    main menu
+    menu
