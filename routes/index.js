@@ -31,8 +31,9 @@ router.post('/callagent', async (req, res) => {
             }
         }).then((response) => {
             console.log("call response", response);
-            res.send("success", response);
+            res.status(200).send("success", response.data);
         }).catch((err) => {
+            console.log("call err", err);
             res.send(err);
         })
 });
