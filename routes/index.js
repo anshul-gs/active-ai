@@ -13,12 +13,11 @@ router.post('/callagent', async (req, res) => {
     if (req.body.from) {
         from = "+91" + req.body.from;
     }
-    if (req.body.workflow) {
+    if (req.body.workflow && req.body.workflow.workflowVariables.sys_person_phone_number_ask) {
         callto = "+91" + req.body.workflow.workflowVariables.sys_person_phone_number_ask;
     } else if (req.body.user && req.body.user.customer_id) {
         callto = "+" + req.body.user.customer_id;
-    }
-    else {
+    } else {
         callto = "+91" + req.body.to;
     }
     console.log("call to", callto);
