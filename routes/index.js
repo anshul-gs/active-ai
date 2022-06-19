@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/callagent', async (req, res) => {
-    console.log('get call', req.query, req.params, req.body);
+    console.log('get call', req.body, req.body.user, req.body.user.customer_id);
     let callto;
     let from = "+919168162979";
     if (req.body.from) {
