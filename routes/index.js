@@ -21,6 +21,7 @@ router.post('/callagent', async (req, res) => {
     else {
         callto = "+91" + req.body.to;
     }
+    console.log("call to", callto);
     await axios.post('https://kpi.knowlarity.com/Basic/v1/account/call/makecall', {
         "k_number": "+911141123562",
         "agent_number": from,
