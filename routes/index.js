@@ -38,7 +38,24 @@ router.post('/callagent', async (req, res) => {
         }).catch((err) => {
             // console.log("call err", err);
             res.send(err);
-        })
+        });
+});
+
+router.post('/room', async (req, res) => {
+    let frameResponse = {
+        "status": "success",
+        "messageCode": "roomLink",
+        "messageParams": []
+    }
+    axios.post("https://presalesuat.gupshup.io/knowlarity/instantroom")
+        .then((response) => {
+            console.log("call response", response.data);
+            frameResponse.messageParams.push(response.data.link);
+            frameResponse = JSON.parse(JSON.stringify(frameResponse));
+            res.send(frameResponse);
+        }).catch((err) => {
+            res.send(err);
+        });
 });
 
 module.exports = router;
