@@ -15,7 +15,10 @@ router.post('/callagent', async (req, res) => {
     }
     if (req.body.workflow) {
         callto = "+91" + req.body.workflow.workflowVariables.sys_person_phone_number_ask;
-    } else {
+    } else if (req.body.user && req.body.user.customer_id) {
+        callto = "+" + req.body.user.customer_id;
+    }
+    else {
         callto = "+91" + req.body.to;
     }
     await axios.post('https://kpi.knowlarity.com/Basic/v1/account/call/makecall', {
