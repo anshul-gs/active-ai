@@ -52,6 +52,7 @@ router.post('/room', async (req, res) => {
             console.log("call response", response.data);
             frameResponse.messageParams.push(response.data.link);
             frameResponse = JSON.parse(JSON.stringify(frameResponse));
+            console.log("frameResponse", frameResponse);
             res.send(frameResponse);
         }).catch((err) => {
             res.send(err);
