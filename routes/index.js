@@ -50,7 +50,7 @@ router.post('/room', async (req, res) => {
     await axios.post("https://presalesuat.gupshup.io/knowlarity/instantroom")
         .then((response) => {
             console.log("call response", response.data);
-            frameResponse.messageParams.push(response.data.link);
+            frameResponse.messageParams.push(response.data.data.link);
             frameResponse = JSON.parse(JSON.stringify(frameResponse));
             console.log("frameResponse", frameResponse);
             res.json(frameResponse);
