@@ -47,13 +47,13 @@ router.post('/room', async (req, res) => {
         "messageCode": "roomLink",
         "messageParams": []
     }
-    axios.post("https://presalesuat.gupshup.io/knowlarity/instantroom")
+    await axios.post("https://presalesuat.gupshup.io/knowlarity/instantroom")
         .then((response) => {
             console.log("call response", response.data);
             frameResponse.messageParams.push(response.data.link);
             frameResponse = JSON.parse(JSON.stringify(frameResponse));
             console.log("frameResponse", frameResponse);
-            res.send(frameResponse);
+            res.json(frameResponse);
         }).catch((err) => {
             res.send(err);
         });
