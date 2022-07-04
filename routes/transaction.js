@@ -84,7 +84,7 @@ const transaction = [
     }
 ]
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
     console.log("req", req.body);
     res.send("hi");
 });
