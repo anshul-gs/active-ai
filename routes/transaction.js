@@ -85,7 +85,7 @@ const transaction = [
 ]
 
 router.post('/', async (req, res) => {
-    console.log("req", req.body, req.body.nlp);
+    console.log("req", req.body.nlp, req.body.nlp.intent, req.body.nlp.intents, req.body.nlp.entities);
     res.send("hi");
 });
 
