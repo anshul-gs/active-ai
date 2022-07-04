@@ -22,5 +22,4 @@ var port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', (err) => {
     if (err) console.log(err);
     console.log("Server listening on port", port);
-})
-
+});
