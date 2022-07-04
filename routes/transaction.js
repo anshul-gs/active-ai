@@ -90,6 +90,7 @@ router.post('/', async (req, res) => {
     console.log("nlp intent", nlp.data['intent']);
     console.log("nlp intents", nlp.data['intents']);
     console.log("nlp entities", nlp.data['entities']);
+    console.log("nlp-------", body)
     res.send("hi");
 });
 
