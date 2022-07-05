@@ -95,17 +95,18 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/create', async (req, res) => {
-    let transaction = {
-        date: req.body.date,
-        type: req.body.type,
-        amount: req.body.amount,
-        referenceNo: req.body.referenceNo,
-        toName: req.body.toName,
-        toCategory: req.body.toCategory
-    }
-    await db.Transaction.create(transaction)
+    // let transaction = {
+    //     date: req.body.date,
+    //     type: req.body.type,
+    //     amount: req.body.amount,
+    //     referenceNo: req.body.referenceNo,
+    //     toName: req.body.toName,
+    //     toCategory: req.body.toCategory
+    // }
+    await db.Transaction.bulkCreate(req.body)
         .then((response) => {
             console.log("response db", response)
+            res.send('success');
         }).catch((err) => {
             res.send(err);
         })
