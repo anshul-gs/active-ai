@@ -103,7 +103,7 @@ router.post('/create', async (req, res) => {
     //     toName: req.body.toName,
     //     toCategory: req.body.toCategory
     // }
-    await db.Transaction.bulkCreate(req.body)
+    await db.Transaction.insertMany(req.body)
         .then((response) => {
             console.log("response db", response)
             res.send('success');
