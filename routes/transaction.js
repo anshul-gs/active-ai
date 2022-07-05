@@ -85,6 +85,12 @@ let demoTransaction = [
 ]
 
 router.post('/', async (req, res) => {
+    let frameResponse = {
+        "status": "success",
+        "templateCode": "showTransactions",
+        "payload": []
+    }
+
     let body = JSON.parse(JSON.stringify(req.body));
     let nlp = JSON.parse(JSON.stringify(body.nlp));
     console.log("nlp intent", nlp.data['intent']);
@@ -100,11 +106,22 @@ router.post('/', async (req, res) => {
     }
     console.log("condition-----", condition);
     db.Transaction.find(condition).then((response) => {
-        console.log("response-----", response);
+        for (let i in response) {
+            frameResponse.payload.push({
+                date: response[i].date,
+                type: response[i].type,
+                amount: response[i].amount,
+                referenceNo: response[i].referenceNo,
+                toName: response[i].toName,
+                toCategory: response[i].toCategory
+            })
+        }
+        console.log("response-----", frameResponse);
+        frameResponse.payload = JSON.stringify(frameResponse.payload);
+        res.send(frameResponse);
     }).catch((err) => {
         console.log("err-----", err);
     })
-    res.send("hi");
 });
 
 router.post('/create', async (req, res) => {
