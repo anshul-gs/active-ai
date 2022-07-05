@@ -13,3 +13,4 @@ mongoose.connect(url, {
 module.exports.Product = require('./product');
 module.exports.Cart = require('./cart');
 module.exports.Order = require('./order');
+module.exports.Transaction = require('./transaction');

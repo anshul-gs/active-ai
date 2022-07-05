@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../models/index');
-const transaction = [
+let demoTransaction = [
     {
         date: "30-May-2022",
         type: "Credit",
-        amount: "18000",
+        amount: 18000,
         referenceNo: "UPI-22xxxxx56",
         toName: "Friend",
         toCategory: "bank"
@@ -13,7 +13,7 @@ const transaction = [
     {
         date: "30-May-2022",
         type: "Debit",
-        amount: "-2000",
+        amount: -2000,
         referenceNo: "UPI-22xxxxx24",
         toName: "Flipkart",
         toCategory: "ecommerce"
@@ -21,7 +21,7 @@ const transaction = [
     {
         date: "29-May-2022",
         type: "Credit",
-        amount: "75000",
+        amount: 75000,
         referenceNo: "CMS-22xxxxx57",
         toName: "Company",
         toCategory: "bank"
@@ -29,7 +29,7 @@ const transaction = [
     {
         date: "28-May-2022",
         type: "Debit",
-        amount: "-250",
+        amount: -250,
         referenceNo: "UPI-21xxxxxS1",
         toName: "Snacks Center",
         toCategory: "food"
@@ -37,7 +37,7 @@ const transaction = [
     {
         date: "25-May-2022",
         type: "Debit",
-        amount: "-887",
+        amount: -887,
         referenceNo: "22xxxxx09",
         toName: "Banjara Dhaba",
         toCategory: "food"
@@ -45,7 +45,7 @@ const transaction = [
     {
         date: "20-May-2022",
         type: "Debit",
-        amount: "-1020",
+        amount: -1020,
         referenceNo: "22xxxxx4T",
         toName: "Amazon",
         toCategory: "ecommerce"
@@ -53,7 +53,7 @@ const transaction = [
     {
         date: "10-May-2022",
         type: "Debit",
-        amount: "-1340",
+        amount: -1340,
         referenceNo: "22xxxxx99",
         toName: "Swiggy",
         toCategory: "food"
@@ -61,7 +61,7 @@ const transaction = [
     {
         date: "05-May-2022",
         type: "Credit",
-        amount: "1934.3",
+        amount: 19340,
         referenceNo: "CMS-22xxxxx11",
         toName: "Friend",
         toCategory: "bank"
@@ -69,7 +69,7 @@ const transaction = [
     {
         date: "04-May-2022",
         type: "Debit",
-        amount: "-1783.03",
+        amount: -1783.03,
         referenceNo: "CMS-22xxxxx46",
         toName: "KSPAYOUT",
         toCategory: "bank"
@@ -77,7 +77,7 @@ const transaction = [
     {
         date: "04-May-2022",
         type: "Debit",
-        amount: "-1003.21",
+        amount: -1003.21,
         referenceNo: "21xxxxx40",
         toName: "Zomato",
         toCategory: "food"
@@ -92,6 +92,23 @@ router.post('/', async (req, res) => {
     console.log("nlp entities", nlp.data['entities']);
     console.log("nlp-------", body)
     res.send("hi");
+});
+
+router.post('/create', async (req, res) => {
+    let transaction = {
+        date: req.body.date,
+        type: req.body.type,
+        amount: req.body.amount,
+        referenceNo: req.body.referenceNo,
+        toName: req.body.toName,
+        toCategory: req.body.toCategory
+    }
+    await db.Transaction.create(transaction)
+        .then((response) => {
+            console.log("response db", response)
+        }).catch((err) => {
+            res.send(err);
+        })
 });
 
 module.exports = router;
