@@ -109,11 +109,11 @@ router.post('/', async (req, res) => {
         for (let i in response) {
             frameResponse.payload.push({
                 date: response[i].date,
-                type: response[i].type,
+                type: "(" + response[i].type + ")",
                 amount: "Rs. " + response[i].amount,
                 referenceNo: "Reference No: " + response[i].referenceNo,
                 toName: response[i].toName,
-                toCategory: response[i].toCategory
+                toCategory: response[i].toCategory + "-"
             })
         }
         console.log("response-----", frameResponse);
