@@ -90,7 +90,20 @@ router.post('/', async (req, res) => {
     console.log("nlp intent", nlp.data['intent']);
     console.log("nlp intents", nlp.data['intents']);
     console.log("nlp entities", nlp.data['entities']);
-    console.log("nlp-------", body)
+    console.log("nlp-------", body);
+    let condition = {};
+    if (body.workflow && body.workflow.requestVariables && body.workflow.requestVariables.banking_product_type) {
+        condition.toCategory = body.workflow.requestVariables.banking_product_type
+    }
+    if (nlp.data['entities'] && nlp.data['entities']['banking.person'] && nlp.data['entities']['banking.person'][0] && nlp.data['entities']['banking.person'][0].value) {
+        condition.toName = nlp.data['entities']['banking.person'][0].value
+    }
+    console.log("condition-----", condition);
+    db.Transaction.find(condition).then((response) => {
+        console.log("response-----", response);
+    }).catch((err) => {
+        console.log("err-----", err);
+    })
     res.send("hi");
 });
 
