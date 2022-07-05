@@ -96,7 +96,7 @@ router.post('/', async (req, res) => {
         condition.toCategory = body.workflow.requestVariables.banking_product_type
     }
     if (nlp.data['entities'] && nlp.data['entities']['banking.person'] && nlp.data['entities']['banking.person'][0] && nlp.data['entities']['banking.person'][0].value) {
-        condition.toName = nlp.data['entities']['banking.person'][0].value
+        condition.toName = { $regex: nlp.data['entities']['banking.person'][0].value, $options: 'i' }
     }
     console.log("condition-----", condition);
     db.Transaction.find(condition).then((response) => {
