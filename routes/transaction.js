@@ -110,8 +110,8 @@ router.post('/', async (req, res) => {
             frameResponse.payload.push({
                 date: response[i].date,
                 type: response[i].type,
-                amount: response[i].amount,
-                referenceNo: response[i].referenceNo,
+                amount: "Rs. " + response[i].amount,
+                referenceNo: "Reference No: " + response[i].referenceNo,
                 toName: response[i].toName,
                 toCategory: response[i].toCategory
             })
