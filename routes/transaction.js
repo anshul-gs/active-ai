@@ -88,7 +88,9 @@ router.post('/', async (req, res) => {
     let frameResponse = {
         "status": "success",
         "templateCode": "showTransactions",
-        "payload": []
+        "payload": {
+            "transaction": []
+        }
     }
 
     let body = JSON.parse(JSON.stringify(req.body));
@@ -107,7 +109,7 @@ router.post('/', async (req, res) => {
     console.log("condition-----", condition);
     db.Transaction.find(condition).then((response) => {
         for (let i in response) {
-            frameResponse.payload.push({
+            frameResponse.payload.transaction.push({
                 date: response[i].date,
                 type: "(" + response[i].type + ")",
                 amount: "Rs. " + response[i].amount,
