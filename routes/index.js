@@ -87,7 +87,7 @@ router.post('/onedirect', async (req, res) => {
         },
     });
     console.log("INBOUND", JSON.parse(data1));
-    axios.post("https://gupshup.onedirect.in/mgateway/public/callback", data1, {
+    await axios.post("https://gupshup.onedirect.in/mgateway/public/callback", data1, {
         headers: {
             apiKey:
                 "d1ffe26594c33d37ead7e0e7d60acc7240b7a1a0f8baa31a79f6d1004d17b0eb",
@@ -129,7 +129,7 @@ router.post('/onedirect', async (req, res) => {
         },
     });
     console.log("OUTBOUND", JSON.parse(data2));
-    axios.post("https://gupshup.onedirect.in/mgateway/public/callback", data2, {
+    await axios.post("https://gupshup.onedirect.in/mgateway/public/callback", data2, {
         headers: {
             apiKey:
                 "d1ffe26594c33d37ead7e0e7d60acc7240b7a1a0f8baa31a79f6d1004d17b0eb",
