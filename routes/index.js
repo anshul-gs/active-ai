@@ -60,7 +60,7 @@ router.post('/room', async (req, res) => {
 });
 
 router.post('/onedirect', async (req, res) => {
-    console.log("req----------------------------------", req);
+    console.log("req----------------------------------", req.body);
     let data1 = JSON.stringify({
         actionType: 'CUSTOMER_MSG',
         channel: 'WHATSAPP',
