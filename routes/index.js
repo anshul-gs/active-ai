@@ -86,7 +86,7 @@ router.post('/onedirect', async (req, res) => {
             action: 'HANDLED',
         },
     });
-    console.log("INBOUND", JSON.parse(data1).nodeInfo);
+    console.log("INBOUND", JSON.parse(data1));
     axios.post("https://gupshup.onedirect.in/mgateway/public/callback", data1, {
         headers: {
             apiKey:
@@ -105,7 +105,7 @@ router.post('/onedirect', async (req, res) => {
         actionType: 'BOT_MSG',
         channel: 'WHATSAPP',
         sessionId: 123, //
-        flowId: 24, //
+        flowId: 243, //
         flowName: "welcome", //
         flowVersion: 1,
         flowEnd: false,
@@ -128,7 +128,7 @@ router.post('/onedirect', async (req, res) => {
             talkToHuman: false,
         },
     });
-    console.log("OUTBOUND", JSON.parse(data2).nodeInfo);
+    console.log("OUTBOUND", JSON.parse(data2));
     axios.post("https://gupshup.onedirect.in/mgateway/public/callback", data2, {
         headers: {
             apiKey:
