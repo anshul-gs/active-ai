@@ -61,6 +61,8 @@ router.post('/room', async (req, res) => {
 
 router.post('/onedirect', async (req, res) => {
     console.log("req----------------------------------", req.body);
+    let sessionId;
+    let inRes;
     let data1 = JSON.stringify({
         actionType: 'CUSTOMER_MSG',
         channel: 'WHATSAPP',
@@ -94,6 +96,8 @@ router.post('/onedirect', async (req, res) => {
             "Content-Type": "application/json",
         }
     }).then((response) => {
+        sessionId = response.data.sessionId;
+        inRes = response.data;
         console.log("call response", response.data);
         // res.send(response.data);
     }).catch((err) => {
@@ -104,7 +108,7 @@ router.post('/onedirect', async (req, res) => {
     let data2 = JSON.stringify({
         actionType: 'BOT_MSG',
         channel: 'WHATSAPP',
-        sessionId: 123, //
+        sessionId: sessionId, //
         flowId: 243, //
         flowName: "welcome", //
         flowVersion: 1,
