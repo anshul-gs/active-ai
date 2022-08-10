@@ -141,7 +141,7 @@ router.post('/onedirect', async (req, res) => {
         console.log("call err", err);
         // res.send(err);
     });
-    res.send(success);
+    res.send("success");
 });
 
 module.exports = router;
