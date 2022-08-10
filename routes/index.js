@@ -128,6 +128,7 @@ router.post('/onedirect', async (req, res) => {
             talkToHuman: false,
         },
     });
+    console.log("OUTBOUND", JSON.parse(data2).nodeInfo);
     axios.post("https://gupshup.onedirect.in/mgateway/public/callback", data2, {
         headers: {
             apiKey:
