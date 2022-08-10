@@ -123,7 +123,7 @@ router.post('/onedirect', async (req, res) => {
                     parentNodeId: 12, //
                     msgId: (Math.random() + 1).toString(36).substring(2),
                     type: 'SEND_MESSAGE',
-                    msgText: JSON.stringify("welcome"), //
+                    msgText: JSON.stringify(inRes), //
                     contentType: 'TEXT',
                     attachmentUrl: null,
                     caption: null,
