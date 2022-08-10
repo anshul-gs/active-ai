@@ -86,17 +86,19 @@ router.post('/onedirect', async (req, res) => {
         },
     });
     console.log("INBOUND", JSON.parse(data1).nodeInfo);
-    let config1 = {
-        method: "post",
-        url: "https://gupshup.onedirect.in/mgateway/public/callback",
+    await axios.post("https://gupshup.onedirect.in/mgateway/public/callback", data1, {
         headers: {
             apiKey:
                 "d1ffe26594c33d37ead7e0e7d60acc7240b7a1a0f8baa31a79f6d1004d17b0eb",
             "Content-Type": "application/json",
-        },
-        data1,
-    };
-    await axios(config1);
+        }
+    }).then((response) => {
+        console.log("call response", response.data);
+        // res.send(response.data);
+    }).catch((err) => {
+        console.log("call err", err);
+        // res.send(err);
+    });
 
     let data2 = JSON.stringify({
         actionType: 'BOT_MSG',
@@ -125,18 +127,19 @@ router.post('/onedirect', async (req, res) => {
             talkToHuman: false,
         },
     });
-    let config2 = {
-        method: "post",
-        url: "https://gupshup.onedirect.in/mgateway/public/callback",
+    await axios.post("https://gupshup.onedirect.in/mgateway/public/callback", data2, {
         headers: {
             apiKey:
                 "d1ffe26594c33d37ead7e0e7d60acc7240b7a1a0f8baa31a79f6d1004d17b0eb",
             "Content-Type": "application/json",
-        },
-        data2,
-    };
-    console.log("OUTBOUND", JSON.parse(data2).botInfo.messages);
-    await axios(config2);
+        }
+    }).then((response) => {
+        console.log("call response", response.data);
+        // res.send(response.data);
+    }).catch((err) => {
+        console.log("call err", err);
+        // res.send(err);
+    });
 });
 
 module.exports = router;
