@@ -59,4 +59,84 @@ router.post('/room', async (req, res) => {
         });
 });
 
+router.post('/onedirect', async (req, res) => {
+    let data1 = JSON.stringify({
+        actionType: 'CUSTOMER_MSG',
+        channel: 'WHATSAPP',
+        contentType: 'TEXT',
+        msgText: null, //
+        attachmentUrl: null,
+        caption: null,
+        customerId: null, //
+        brandAccount: "+911204118404",
+        initialAttribute: {
+            chatField: [],
+            customerField: [],
+        },
+        botId: 1011,
+        botName: "healthcarebot",
+        nodeInfo: {
+            nodeId: null, //
+            name: null, //
+            parentId: null, //
+            flowName: null, //
+            flowId: null, //
+            inputs: null,
+            action: 'HANDLED',
+        },
+    });
+    console.log("INBOUND", JSON.parse(data1).nodeInfo);
+    let config1 = {
+        method: "post",
+        url: "https://gupshup.onedirect.in/mgateway/public/callback",
+        headers: {
+            apiKey:
+                "d1ffe26594c33d37ead7e0e7d60acc7240b7a1a0f8baa31a79f6d1004d17b0eb",
+            "Content-Type": "application/json",
+        },
+        data1,
+    };
+    await axios(config1);
+
+    let data2 = JSON.stringify({
+        actionType: 'BOT_MSG',
+        channel: 'WHATSAPP',
+        sessionId: null, //
+        flowId: null, //
+        flowName: null, //
+        flowVersion: 1,
+        flowEnd: false,
+        botInfo: {
+            id: 1011,
+            name: "healthcarebot",
+            messages: [
+                {
+                    nodeId: null, //
+                    nodeName: null, //
+                    parentNodeId: null, //
+                    msgId: (Math.random() + 1).toString(36).substring(2),
+                    type: 'SEND_MESSAGE',
+                    msgText: JSON.stringify(null), //
+                    contentType: 'TEXT',
+                    attachmentUrl: null,
+                    caption: null,
+                },
+            ],
+            talkToHuman: false,
+        },
+    });
+    let config2 = {
+        method: "post",
+        url: "https://gupshup.onedirect.in/mgateway/public/callback",
+        headers: {
+            apiKey:
+                "d1ffe26594c33d37ead7e0e7d60acc7240b7a1a0f8baa31a79f6d1004d17b0eb",
+            "Content-Type": "application/json",
+        },
+        data2,
+    };
+    console.log("OUTBOUND", JSON.parse(data2).botInfo.messages);
+    await axios(config2);
+});
+
 module.exports = router;
