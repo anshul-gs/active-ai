@@ -94,10 +94,10 @@ router.post('/onedirect', async (req, res) => {
         actionType: 'CUSTOMER_MSG',
         channel: 'WHATSAPP',
         contentType: 'TEXT',
-        msgText: 'yo', //
+        msgText: req.body.request.text, //
         attachmentUrl: null,
         caption: null,
-        customerId: 21, //
+        customerId: req.body.user.channel_id, //
         brandAccount: "+911204118404",
         initialAttribute: {
             chatField: [],
@@ -106,11 +106,11 @@ router.post('/onedirect', async (req, res) => {
         botId: 1011,
         botName: "healthcarebot",
         nodeInfo: {
-            nodeId: "welcome", //
-            name: "welcome", //
-            parentId: "welcome", //
-            flowName: "welcome", //
-            flowId: "welcome", //
+            nodeId: req.body.workflow.nodeId, //
+            name: req.body.workflow.nodeId, //
+            parentId: req.body.workflow.workflowId, //
+            flowName: req.body.workflow.workflowId, //
+            flowId: req.body.workflow.workflowId, //
             inputs: null,
             action: 'HANDLED',
         },
@@ -137,7 +137,7 @@ router.post('/onedirect', async (req, res) => {
         channel: 'WHATSAPP',
         sessionId: sessionId, //
         flowId: 243, //
-        flowName: "welcome", //
+        flowName: req.body.workflow.workflowId, //
         flowVersion: 1,
         flowEnd: false,
         botInfo: {
@@ -145,9 +145,9 @@ router.post('/onedirect', async (req, res) => {
             name: "healthcarebot",
             messages: [
                 {
-                    nodeId: "welcome", //
-                    nodeName: "welcome", //
-                    parentNodeId: 12, //
+                    nodeId: req.body.workflow.nodeId, //
+                    nodeName: req.body.workflow.nodeId, //
+                    parentNodeId: req.body.workflow.workflowId, //
                     msgId: (Math.random() + 1).toString(36).substring(2),
                     type: 'SEND_MESSAGE',
                     msgText: JSON.stringify(inRes), //
