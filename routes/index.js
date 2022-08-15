@@ -61,15 +61,27 @@ router.post('/room', async (req, res) => {
 
 router.post('/medicine', (req, res) => {
     console.log("req----------------------------------", req.body);
+    let text = req.body.req.text.toLowerCase();
     let frameResponse = {
         "status": "success",
         "messageCode": "medicine",
         "messageParams": []
     }
-    frameResponse.messageParams = [
-        'Calpol 650',
-        '45'
-    ];
+    if (text.includes('dolo')) {
+        frameResponse.messageParams = [
+            'Calpol 650',
+            '45'
+        ];
+    } else if (text.includes('calpol')) {
+        frameResponse.messageCode = "medi"
+    } else if (text.includes('moov')) {
+        frameResponse.messageParams = [
+            'Volini Gel',
+            '30'
+        ];
+    } else if (text.includes('volini')) {
+        frameResponse.messageCode = "medi"
+    }
     frameResponse = JSON.parse(JSON.stringify(frameResponse));
     res.json(frameResponse);
 });
