@@ -61,7 +61,7 @@ router.post('/room', async (req, res) => {
 
 router.post('/medicine', (req, res) => {
     console.log("req----------------------------------", req.body);
-    let text = req.body.req.text.toLowerCase();
+    let text = req.body.request.text.toLowerCase();
     let frameResponse = {
         "status": "success",
         "messageCode": "medicine",
