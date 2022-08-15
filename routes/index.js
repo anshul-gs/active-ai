@@ -59,6 +59,21 @@ router.post('/room', async (req, res) => {
         });
 });
 
+router.post('/medicine', (req, res) => {
+    console.log("req----------------------------------", req.body);
+    let frameResponse = {
+        "status": "success",
+        "messageCode": "medicine",
+        "messageParams": []
+    }
+    frameResponse.messageParams = [
+        'Calpol 650',
+        '45'
+    ];
+    frameResponse = JSON.parse(JSON.stringify(frameResponse));
+    res.json(frameResponse);
+});
+
 router.post('/onedirect', async (req, res) => {
     console.log("req----------------------------------", req.body);
     let sessionId;
