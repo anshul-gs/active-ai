@@ -185,7 +185,7 @@ router.post('/pan', async (req, res) => {
         "templateCode": "panDetails",
         "payload": {}
     }
-    await readPdf(image, (parsedText) => {
+    await readPdf(image, 'pan', (parsedText) => {
         console.log('parsedText-----------', parsedText);
         parsedText = parsedText.text;
         frameResponse.payload = {
@@ -201,7 +201,24 @@ router.post('/pan', async (req, res) => {
 
 router.post('/cheque', async (req, res) => {
     console.log("req----------------------------------", req.body);
-
+    let image = 'https://pbs.twimg.com/media/DhPmjGJU0AESQBw?format=jpg&name=4096x4096';
+    let frameResponse = {
+        "status": "success",
+        "templateCode": "panDetails",
+        "payload": {}
+    }
+    await readPdf(image, 'cheque', (parsedText) => {
+        console.log('parsedText-----------', parsedText);
+        parsedText = parsedText.text;
+        // frameResponse.payload = {
+        //     pan: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18),
+        //     dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}")[0],
+        //     name: parsedText.split(/\r|\n/g)[2]
+        // }
+        // console.log('frameResponse-----------', frameResponse);
+        // frameResponse.payload = JSON.stringify(frameResponse.payload);
+        res.send(frameResponse);
+    });
 });
 
 module.exports = router;

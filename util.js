@@ -1,10 +1,15 @@
 const { ocrSpace } = require('ocr-space-api-wrapper');
 
-let readPdf = async (image, callback) => {
+let readPdf = async (image, detail, callback) => {
     try {
         // Using the OCR.space default free API key (max 10reqs in 10mins) + remote file
         console.log('image-----------', image);
-        let text = await ocrSpace(image);
+        let text;
+        if (detail == 'pan') {
+            text = await ocrSpace(image);
+        } else {
+            text = await ocrSpace(image, { isTable: true, scale: true, isCreateSearchablePdf: true, detectOrientation: true });
+        }
         console.log("text-----------", text);
         callback({ 'error': false, 'text': text.ParsedResults[0].ParsedText });
 
