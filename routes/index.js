@@ -201,20 +201,36 @@ router.post('/pan', async (req, res) => {
 
 router.post('/cheque', async (req, res) => {
     console.log("req----------------------------------", req.body);
-    let image = req.body.url ? req.body.url : 'https://pbs.twimg.com/media/DhPmjGJU0AESQBw?format=jpg&name=4096x4096';
+    let image = req.body.url ? req.body.url :
+        'https://filemanager.gupshup.io/fm/wamedia/demobot1/bd2e0137-2040-429c-9ef3-51f50a68cb7f' // anshul
+    // 'https://filemanager.gupshup.io/fm/wamedia/demobot1/26383814-2bd0-4599-99f9-fbd238a3cf19' //mridul
+    // 'https://miro.medium.com/max/1400/0*0X8Z8EXF0mXUSLvB.jpg'
+    // 'https://pbs.twimg.com/media/DhPmjGJU0AESQBw?format=jpg&name=4096x4096';
     // https://www.researchgate.net/profile/Chinmaya-Panda-4/publication/329019514/figure/fig4/AS:984139926880259@1611648651475/Sample-image-of-a-bank-cheque.jpg
     let frameResponse = {
         "status": "success",
-        "templateCode": "panDetails",
+        "templateCode": "chequeDetails",
         "payload": {}
     }
     await readPdf(image, 'cheque', (parsedText) => {
         console.log('parsedText-----------', parsedText);
-        parsedText = parsedText.text;
+        parsedText = parsedText.text.toLowerCase();
+        //     let account = parsedText.indexOf('code'))
+        trimParsedText = parsedText.replace(/\n|\r|\t/g, "");
+        let findCode;
+        if (trimParsedText.indexOf('code')) {
+            findCode = trimParsedText.indexOf('code');
+        }
+        console.log('findCode-----------', findCode);
+        let findAccount;
+        if (trimParsedText.indexOf('no.') || trimParsedText.indexOf('a/cno.') || trimParsedText.indexOf('account') || trimParsedText.indexOf('a/c')) {
+            findAccount = trimParsedText.indexOf('no.') || trimParsedText.indexOf('a/cno.') || trimParsedText.indexOf('account') || trimParsedText.indexOf('a/c');
+        }
+        console.log('findAccount-----------', findAccount, trimParsedText);
         frameResponse.payload = {
-            account: '12344',
-            ifsc: '1233',
-            name: parsedText
+            account: trimParsedText.slice(findAccount + 3, findAccount + 15),
+            ifsc: trimParsedText.slice(findCode + 5, findCode + 17),
+            // name: 'abc'
         }
         console.log('frameResponse-----------', frameResponse);
         frameResponse.payload = JSON.stringify(frameResponse.payload);
