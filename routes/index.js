@@ -212,8 +212,8 @@ router.post('/cheque', async (req, res) => {
         console.log('parsedText-----------', parsedText);
         parsedText = parsedText.text;
         frameResponse.payload = {
-            account: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18),
-            ifsc: parsedText,
+            account: '12344',
+            ifsc: '1233',
             name: parsedText
         }
         console.log('frameResponse-----------', frameResponse);
