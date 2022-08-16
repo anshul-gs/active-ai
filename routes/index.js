@@ -185,11 +185,13 @@ router.post('/pan', async (req, res) => {
         "templateCode": "panDetails",
         "payload": {}
     }
-    readPdf(image, function (parsedText) {
+    await readPdf(image, (parsedText) => {
+        console.log('parsedText-----------', parsedText);
+        parsedText = parsedText.text;
         frameResponse.payload = {
-            pan: parsedText.slice(parsedText.indexOf('Number') + 6, parsedText.indexOf('Number') + 18),
-            dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}"),
-            name: parsedText.split(/\r|\n/g)
+            pan: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18),
+            dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}")[0],
+            name: parsedText.split(/\r|\n/g)[2]
         }
         console.log('frameResponse-----------', frameResponse);
         frameResponse.payload = JSON.stringify(frameResponse.payload);
