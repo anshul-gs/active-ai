@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require('axios');
+const { readPdf } = require('../util');
 
 router.get('/', (req, res) => {
     res.send("Welcome to Meluka Honey - Active Bot!");
@@ -174,6 +175,32 @@ router.post('/onedirect', async (req, res) => {
         // res.send(err);
     });
     res.send("success");
+});
+
+router.post('/pan', async (req, res) => {
+    console.log("req----------------------------------", req.body);
+    let image = 'https://5.imimg.com/data5/TP/US/MU/SELLER-51778781/pan-card-1000x1000.jpg';
+    let frameResponse = {
+        "status": "success",
+        "templateCode": "panDetails",
+        "payload": {}
+    }
+    readPdf(image, function (parsedText) {
+        let parsedText = parsedText;
+        frameResponse.payload = {
+            pan: parsedText.slice(parsedText.indexOf('Number') + 6, parsedText.indexOf('Number') + 18),
+            dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}"),
+            name: parsedText.split(/\r|\n/g)
+        }
+        console.log('frameResponse-----------', frameResponse);
+        frameResponse.payload = JSON.stringify(frameResponse.payload);
+        res.send(frameResponse);
+    });
+});
+
+router.post('/cheque', async (req, res) => {
+    console.log("req----------------------------------", req.body);
+
 });
 
 module.exports = router;
