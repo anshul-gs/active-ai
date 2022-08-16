@@ -179,7 +179,7 @@ router.post('/onedirect', async (req, res) => {
 
 router.post('/pan', async (req, res) => {
     console.log("req----------------------------------", req.body);
-    let image = 'https://5.imimg.com/data5/TP/US/MU/SELLER-51778781/pan-card-1000x1000.jpg';
+    let image = req.body.url ? req.body.url : 'https://5.imimg.com/data5/TP/US/MU/SELLER-51778781/pan-card-1000x1000.jpg';
     let frameResponse = {
         "status": "success",
         "templateCode": "panDetails",
@@ -201,7 +201,8 @@ router.post('/pan', async (req, res) => {
 
 router.post('/cheque', async (req, res) => {
     console.log("req----------------------------------", req.body);
-    let image = 'https://pbs.twimg.com/media/DhPmjGJU0AESQBw?format=jpg&name=4096x4096';
+    let image = req.body.url ? req.body.url : 'https://pbs.twimg.com/media/DhPmjGJU0AESQBw?format=jpg&name=4096x4096';
+    // https://www.researchgate.net/profile/Chinmaya-Panda-4/publication/329019514/figure/fig4/AS:984139926880259@1611648651475/Sample-image-of-a-bank-cheque.jpg
     let frameResponse = {
         "status": "success",
         "templateCode": "panDetails",
@@ -210,13 +211,13 @@ router.post('/cheque', async (req, res) => {
     await readPdf(image, 'cheque', (parsedText) => {
         console.log('parsedText-----------', parsedText);
         parsedText = parsedText.text;
-        // frameResponse.payload = {
-        //     pan: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18),
-        //     dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}")[0],
-        //     name: parsedText.split(/\r|\n/g)[2]
-        // }
-        // console.log('frameResponse-----------', frameResponse);
-        // frameResponse.payload = JSON.stringify(frameResponse.payload);
+        frameResponse.payload = {
+            account: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18),
+            ifsc: parsedText,
+            name: parsedText
+        }
+        console.log('frameResponse-----------', frameResponse);
+        frameResponse.payload = JSON.stringify(frameResponse.payload);
         res.send(frameResponse);
     });
 });
