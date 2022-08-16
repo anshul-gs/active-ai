@@ -8,7 +8,7 @@ let readPdf = async (image, detail, callback) => {
         if (detail == 'pan') {
             text = await ocrSpace(image);
         } else {
-            text = await ocrSpace(image, { isTable: true, scale: true, isCreateSearchablePdf: true, detectOrientation: true });
+            text = await ocrSpace(image, { isTable: true });
         }
         console.log("text-----------", text);
         callback({ 'error': false, 'text': text.ParsedResults[0].ParsedText });
@@ -20,7 +20,6 @@ let readPdf = async (image, detail, callback) => {
     } catch (error) {
         callback({ 'error': true, 'text': error });
         console.error(error);
-        res.send(error);
     }
 }
 
