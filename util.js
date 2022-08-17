@@ -3,7 +3,7 @@ const { ocrSpace } = require('ocr-space-api-wrapper');
 let readPdf = async (image, detail, callback) => {
     try {
         // Using the OCR.space default free API key (max 10reqs in 10mins) + remote file
-        console.log('image-----------', image);
+        console.log('image-----------', image)
         let text;
         if (detail == 'pan') {
             text = await ocrSpace(image);
