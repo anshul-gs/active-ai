@@ -12,7 +12,9 @@ router.post('/getNumber', async (req, res) => {
     let frameResponse = {
         "status": "success",
         "templateCode": "call",
-        "payload": {}
+        "payload": {
+            number: req.body.user.channel_id
+        }
     }
     res.send(frameResponse);
 });
