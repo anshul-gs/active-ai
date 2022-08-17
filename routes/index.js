@@ -26,7 +26,7 @@ router.post('/callHealth', async (req, res) => {
     if (req.body.request.text.length == 10 && !isNaN(parseInt(req.body.request.text))) {
         number = req.body.request.text;
     }
-    let callto = number ? number : "+" + req.body.user.channel_id;
+    let callto = number ? "+91" + number : "+" + req.body.user.channel_id;
     await axios.post('https://kpi.knowlarity.com/Basic/v1/account/call/makecall', {
         "k_number": "+911141123562",
         "agent_number": from,
