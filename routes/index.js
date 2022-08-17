@@ -185,18 +185,22 @@ router.post('/pan', async (req, res) => {
         "templateCode": "panDetails",
         "payload": {}
     }
-    await readPdf(image, 'pan', (parsedText) => {
-        console.log('parsedText-----------', parsedText);
-        parsedText = parsedText.text
-        frameResponse.payload = {
-            pan: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18),
-            dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}")[0],
-            name: parsedText.split(/\r|\n/g)[2]
-        }
-        console.log('frameResponse-----------', frameResponse);
-        frameResponse.payload = JSON.stringify(frameResponse.payload);
-        res.send(frameResponse);
-    });
+    try {
+        await readPdf(image, 'pan', (parsedText) => {
+            console.log('parsedText-----------', parsedText);
+            parsedText = parsedText.text
+            frameResponse.payload = {
+                pan: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18),
+                dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}")[0],
+                name: parsedText.split(/\r|\n/g)[2]
+            }
+            console.log('frameResponse-----------', frameResponse);
+            frameResponse.payload = JSON.stringify(frameResponse.payload);
+            res.send(frameResponse);
+        });
+    } catch (e) {
+        throw new Error(e);
+    }
 });
 
 router.post('/cheque', async (req, res) => {
@@ -212,30 +216,34 @@ router.post('/cheque', async (req, res) => {
         "templateCode": "chequeDetails",
         "payload": {}
     }
-    await readPdf(image, 'cheque', (parsedText) => {
-        console.log('parsedText-----------', parsedText);
-        parsedText = parsedText.text.toLowerCase();
-        //     let account = parsedText.indexOf('code'))
-        trimParsedText = parsedText.replace(/\n|\r|\t/g, "");
-        let findCode;
-        if (trimParsedText.indexOf('code')) {
-            findCode = trimParsedText.indexOf('code');
-        }
-        console.log('findCode-----------', findCode);
-        let findAccount;
-        if (trimParsedText.indexOf('no.') || trimParsedText.indexOf('a/cno.') || trimParsedText.indexOf('account') || trimParsedText.indexOf('a/c')) {
-            findAccount = trimParsedText.indexOf('no.') || trimParsedText.indexOf('a/cno.') || trimParsedText.indexOf('account') || trimParsedText.indexOf('a/c');
-        }
-        console.log('findAccount-----------', findAccount, trimParsedText);
-        frameResponse.payload = {
-            account: trimParsedText.slice(findAccount + 3, findAccount + 15),
-            ifsc: trimParsedText.slice(findCode + 5, findCode + 17),
-            // name: 'abc'
-        }
-        console.log('frameResponse-----------', frameResponse);
-        frameResponse.payload = JSON.stringify(frameResponse.payload);
-        res.send(frameResponse);
-    });
+    try {
+        await readPdf(image, 'cheque', (parsedText) => {
+            console.log('parsedText-----------', parsedText);
+            parsedText = parsedText.text.toLowerCase();
+            //     let account = parsedText.indexOf('code'))
+            trimParsedText = parsedText.replace(/\n|\r|\t/g, "");
+            let findCode;
+            if (trimParsedText.indexOf('code')) {
+                findCode = trimParsedText.indexOf('code');
+            }
+            console.log('findCode-----------', findCode);
+            let findAccount;
+            if (trimParsedText.indexOf('no.') || trimParsedText.indexOf('a/cno.') || trimParsedText.indexOf('account') || trimParsedText.indexOf('a/c')) {
+                findAccount = trimParsedText.indexOf('no.') || trimParsedText.indexOf('a/cno.') || trimParsedText.indexOf('account') || trimParsedText.indexOf('a/c');
+            }
+            console.log('findAccount-----------', findAccount, trimParsedText);
+            frameResponse.payload = {
+                account: trimParsedText.slice(findAccount + 3, findAccount + 15),
+                ifsc: trimParsedText.slice(findCode + 5, findCode + 17),
+                // name: 'abc'
+            }
+            console.log('frameResponse-----------', frameResponse);
+            frameResponse.payload = JSON.stringify(frameResponse.payload);
+            res.send(frameResponse);
+        });
+    } catch (e) {
+        throw new Error(e);
+    }
 });
 
 module.exports = router;
