@@ -20,6 +20,33 @@ router.post('/getNumber', async (req, res) => {
     res.send(frameResponse);
 });
 
+router.post('/callHealth', async (req, res) => {
+    let from = "+919168162979";
+    let number;
+    if (req.body.request.text.length == 10 && !isNaN(parseInt(req.body.request.text))) {
+        number = req.body.request.text;
+    }
+    let callto = number ? number : "+" + req.body.user.channel_id;
+    await axios.post('https://kpi.knowlarity.com/Basic/v1/account/call/makecall', {
+        "k_number": "+911141123562",
+        "agent_number": from,
+        "customer_number": callto,
+        "caller_id": "+911141123562"
+    },
+        {
+            headers: {
+                'Authorization': 'a86d7c03-abb4-11e6-982f-066beb27a027',
+                'x-api-key': 'GesxeTJGz52ReWg8UBb8w7fTtqaCy1107E6bNZmG'
+            }
+        }).then((response) => {
+            console.log("call response", response.data);
+            res.send(response.data);
+        }).catch((err) => {
+            // console.log("call err", err);
+            res.send(err);
+        });
+});
+
 router.post('/callagent', async (req, res) => {
     console.log('get call', req.body);
     let callto;
