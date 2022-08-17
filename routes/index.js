@@ -242,7 +242,7 @@ router.post('/cheque', async (req, res) => {
             res.send(frameResponse);
         });
     } catch (e) {
-        throw new Error(e);
+        throw new Error(e)
     }
 });
 
