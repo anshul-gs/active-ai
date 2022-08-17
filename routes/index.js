@@ -16,6 +16,7 @@ router.post('/getNumber', async (req, res) => {
             number: req.body.user.channel_id
         }
     }
+    console.log("frameResponse-----", frameResponse);
     res.send(frameResponse);
 });
 
