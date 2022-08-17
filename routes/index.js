@@ -7,6 +7,16 @@ router.get('/', (req, res) => {
     res.send("Welcome to Meluka Honey - Active Bot!");
 });
 
+router.post('/getNumber', async (req, res) => {
+    console.log('get call', req.body);
+    let frameResponse = {
+        "status": "success",
+        "templateCode": "call",
+        "payload": {}
+    }
+    res.send(frameResponse);
+});
+
 router.post('/callagent', async (req, res) => {
     console.log('get call', req.body);
     let callto;
