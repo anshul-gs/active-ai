@@ -187,7 +187,7 @@ router.post('/pan', async (req, res) => {
     }
     await readPdf(image, 'pan', (parsedText) => {
         console.log('parsedText-----------', parsedText);
-        parsedText = parsedText.text;
+        parsedText = parsedText.text
         frameResponse.payload = {
             pan: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18),
             dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}")[0],
