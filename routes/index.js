@@ -11,7 +11,7 @@ router.post('/getNumber', async (req, res) => {
     console.log('get call', req.body);
     let frameResponse = {
         "status": "success",
-        "templateCode": "call",
+        "templateCode": "getNumber",
         "payload": {
             number: req.body.user.channel_id
         }
