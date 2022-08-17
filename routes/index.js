@@ -185,10 +185,12 @@ router.post('/pan', async (req, res) => {
         "templateCode": "panDetails",
         "payload": {}
     }
-    try {
-        await readPdf(image, 'pan', (parsedText) => {
-            console.log('parsedText-----------', parsedText);
-            parsedText = parsedText.text
+    await readPdf(image, 'pan', (parsedText) => {
+        console.log('parsedText-----------', parsedText);
+        if (parsedText.text.IsErroredOnProcessing) {
+            res.send(parsedText.text.ErrorMessage);
+        } else {
+            parsedText = parsedText.text.ParsedResults[0].ParsedText;
             frameResponse.payload = {
                 pan: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18),
                 dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}")[0],
@@ -197,10 +199,8 @@ router.post('/pan', async (req, res) => {
             console.log('frameResponse-----------', frameResponse);
             frameResponse.payload = JSON.stringify(frameResponse.payload);
             res.send(frameResponse);
-        });
-    } catch (e) {
-        throw new Error(e);
-    }
+        }
+    });
 });
 
 router.post('/cheque', async (req, res) => {
@@ -216,11 +216,13 @@ router.post('/cheque', async (req, res) => {
         "templateCode": "chequeDetails",
         "payload": {}
     }
-    try {
-        await readPdf(image, 'cheque', (parsedText) => {
-            console.log('parsedText-----------', parsedText);
-            parsedText = parsedText.text.toLowerCase();
-            //     let account = parsedText.indexOf('code'))
+    await readPdf(image, 'cheque', (parsedText) => {
+        console.log('parsedText-----------', parsedText);
+        if (parsedText.text.IsErroredOnProcessing) {
+            res.send(parsedText.text.ErrorMessage);
+        } else {
+            parsedText = parsedText.text.ParsedResults[0].ParsedText.toLowerCase();
+            //     let account = parsedText.indexOf('code'));
             trimParsedText = parsedText.replace(/\n|\r|\t/g, "");
             let findCode;
             if (trimParsedText.indexOf('code')) {
@@ -240,10 +242,8 @@ router.post('/cheque', async (req, res) => {
             console.log('frameResponse-----------', frameResponse);
             frameResponse.payload = JSON.stringify(frameResponse.payload);
             res.send(frameResponse);
-        });
-    } catch (e) {
-        throw new Error(e)
-    }
+        }
+    });
 });
 
 module.exports = router;
