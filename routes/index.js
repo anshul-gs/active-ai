@@ -228,7 +228,7 @@ router.post('/pan', async (req, res) => {
     await readPdf(image, 'pan', (parsedText) => {
         console.log('parsedText-----------', parsedText);
         if (parsedText.text.IsErroredOnProcessing) {
-            res.send(parsedText.text.ErrorMessage);
+            res.send(parsedText.text.ErrorMessage)
         } else {
             parsedText = parsedText.text.ParsedResults[0].ParsedText;
             frameResponse.payload = {
