@@ -284,6 +284,14 @@ router.post('/cheque', async (req, res) => {
                     ifsc: trimParsedText.slice(findCode + 5, findCode + 17),
                     // name: 'abc'
                 }
+                if (frameResponse.payload.ifsc.length > 0) {
+                    await axios.get('https://ifsc.razorpay.com/' + frameResponse.payload.ifsc)
+                        .then((response) => {
+                            frameResponse.payload.branchDetails = response;
+                        }).catch((error) => {
+                            console.error(error);
+                        })
+                }
                 console.log('frameResponse-----------', frameResponse);
                 frameResponse.payload = JSON.stringify(frameResponse.payload);
                 res.send(frameResponse);
