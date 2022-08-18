@@ -230,15 +230,19 @@ router.post('/pan', async (req, res) => {
         if (parsedText.text.IsErroredOnProcessing) {
             res.send(parsedText.text.ErrorMessage);
         } else {
-            parsedText = parsedText.text.ParsedResults[0].ParsedText;
-            frameResponse.payload = {
-                pan: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18),
-                dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}")[0],
-                name: parsedText.split(/\r|\n/g)[2]
+            if (parsedText && parsedText.text && parsedText.text.ParsedResults[0] && parsedText.text.ParsedResults[0].ParsedText) {
+                parsedText = parsedText.text.ParsedResults[0].ParsedText;
+                frameResponse.payload = {
+                    pan: parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18) ? parsedText.slice(parsedText.indexOf('Number') + 8, parsedText.indexOf('Number') + 18) : null,
+                    dob: parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}") ? parsedText.match("[0-9]{2}([\-/ \.])[0-9]{2}[\-/ \.][0-9]{4}")[0] : null,
+                    name: parsedText.split(/\r|\n/g) ? parsedText.split(/\r|\n/g)[2] : null
+                }
+                console.log('frameResponse-----------', frameResponse);
+                frameResponse.payload = JSON.stringify(frameResponse.payload);
+                res.send(frameResponse);
+            } else {
+                res.send(frameResponse);
             }
-            console.log('frameResponse-----------', frameResponse);
-            frameResponse.payload = JSON.stringify(frameResponse.payload);
-            res.send(frameResponse);
         }
     });
 });
