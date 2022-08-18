@@ -265,27 +265,31 @@ router.post('/cheque', async (req, res) => {
         if (parsedText.text.IsErroredOnProcessing) {
             res.send(parsedText.text.ErrorMessage);
         } else {
-            parsedText = parsedText.text.ParsedResults[0].ParsedText.toLowerCase();
-            //     let account = parsedText.indexOf('code'));
-            trimParsedText = parsedText.replace(/\n|\r|\t/g, "");
-            let findCode;
-            if (trimParsedText.indexOf('code')) {
-                findCode = trimParsedText.indexOf('code');
+            if (parsedText && parsedText.text && parsedText.text.ParsedResults[0] && parsedText.text.ParsedResults[0].ParsedText) {
+                parsedText = parsedText.text.ParsedResults[0].ParsedText.toLowerCase();
+                //     let account = parsedText.indexOf('code'));
+                trimParsedText = parsedText.replace(/\n|\r|\t/g, "");
+                let findCode;
+                if (trimParsedText.indexOf('code')) {
+                    findCode = trimParsedText.indexOf('code');
+                }
+                console.log('findCode-----------', findCode);
+                let findAccount;
+                if (trimParsedText.indexOf('no.') || trimParsedText.indexOf('a/cno.') || trimParsedText.indexOf('account') || trimParsedText.indexOf('a/c')) {
+                    findAccount = trimParsedText.indexOf('no.') || trimParsedText.indexOf('a/cno.') || trimParsedText.indexOf('account') || trimParsedText.indexOf('a/c');
+                }
+                console.log('findAccount-----------', findAccount, trimParsedText);
+                frameResponse.payload = {
+                    account: trimParsedText.slice(findAccount + 3, findAccount + 15),
+                    ifsc: trimParsedText.slice(findCode + 5, findCode + 17),
+                    // name: 'abc'
+                }
+                console.log('frameResponse-----------', frameResponse);
+                frameResponse.payload = JSON.stringify(frameResponse.payload);
+                res.send(frameResponse);
+            } else {
+                res.send(frameResponse);
             }
-            console.log('findCode-----------', findCode);
-            let findAccount;
-            if (trimParsedText.indexOf('no.') || trimParsedText.indexOf('a/cno.') || trimParsedText.indexOf('account') || trimParsedText.indexOf('a/c')) {
-                findAccount = trimParsedText.indexOf('no.') || trimParsedText.indexOf('a/cno.') || trimParsedText.indexOf('account') || trimParsedText.indexOf('a/c');
-            }
-            console.log('findAccount-----------', findAccount, trimParsedText);
-            frameResponse.payload = {
-                account: trimParsedText.slice(findAccount + 3, findAccount + 15),
-                ifsc: trimParsedText.slice(findCode + 5, findCode + 17),
-                // name: 'abc'
-            }
-            console.log('frameResponse-----------', frameResponse);
-            frameResponse.payload = JSON.stringify(frameResponse.payload);
-            res.send(frameResponse);
         }
     });
 });
