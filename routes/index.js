@@ -260,7 +260,7 @@ router.post('/cheque', async (req, res) => {
         "templateCode": "chequeDetails",
         "payload": {}
     }
-    await readPdf(image, 'cheque', (parsedText) => {
+    await readPdf(image, 'cheque', async (parsedText) => {
         console.log('parsedText-----------', parsedText);
         if (parsedText.text.IsErroredOnProcessing) {
             res.send(parsedText.text.ErrorMessage);
@@ -285,9 +285,10 @@ router.post('/cheque', async (req, res) => {
                     // name: 'abc'
                 }
                 if (frameResponse.payload.ifsc.length > 0) {
-                    await axios.get('https://ifsc.razorpay.com/' + frameResponse.payload.ifsc)
+                    await axios.get('https://ifsc.razorpay.com/' + (frameResponse.payload.ifsc.trim().toUpperCase()))
                         .then((response) => {
-                            frameResponse.payload.branchDetails = response;
+                            console.log('response from razorpay-----------', response.data);
+                            frameResponse.payload.branchDetails = response.data;
                         }).catch((error) => {
                             console.error(error);
                         })
