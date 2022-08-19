@@ -143,7 +143,12 @@ router.post('/medicine', (req, res) => {
     } else if (text.includes('paracin')) {
         frameResponse.messageCode = "medi"
     }
-    frameResponse.payload = JSON.stringify(frameResponse.payload);
+    if (frameResponse.payload) {
+        frameResponse.payload = JSON.stringify(frameResponse.payload);
+    }
+    if (frameResponse.messageCode) {
+        frameResponse = JSON.parse(JSON.stringify(frameResponse));
+    }
     console.log(frameResponse);
     res.json(frameResponse);
 });
