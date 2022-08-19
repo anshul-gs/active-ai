@@ -105,23 +105,28 @@ router.post('/medicine', (req, res) => {
     let text = req.body.request.text.toLowerCase();
     let frameResponse = {
         "status": "success",
-        "messageCode": "medicine",
-        "messageParams": []
+        "templateCode": "calpol",
+        "payload": {
+            name: "",
+            price: "",
+            url: ""
+        }
     }
     if (text.includes('dolo')) {
-        frameResponse.messageParams = [
-            'Calpol 650',
-            '45'
-        ];
-    } else if (text.includes('calpol')) {
-        frameResponse.messageCode = "medi"
-    } else if (text.includes('moov')) {
-        frameResponse.messageParams = [
-            'Volini Gel',
-            '30'
-        ];
-    } else if (text.includes('volini')) {
-        frameResponse.messageCode = "medi"
+        frameResponse.payload = {
+            name: "Calpol 650",
+            price: 45,
+            url: "https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/clpmvl3fpvnn4s3epnm6.jpg"
+        }
+        // } else if (text.includes('calpol')) {
+        //     frameResponse.messageCode = "medi"
+        // } else if (text.includes('moov')) {
+        //     frameResponse.messageParams = [
+        //         'Volini Gel',
+        //         '30'
+        //     ];
+        // } else if (text.includes('volini')) {
+        //     frameResponse.messageCode = "medi"
     }
     frameResponse = JSON.parse(JSON.stringify(frameResponse));
     res.json(frameResponse);
