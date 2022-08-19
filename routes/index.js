@@ -128,7 +128,8 @@ router.post('/medicine', (req, res) => {
         // } else if (text.includes('volini')) {
         //     frameResponse.messageCode = "medi"
     }
-    frameResponse = JSON.parse(JSON.stringify(frameResponse));
+    frameResponse.payload = JSON.stringify(frameResponse.payload);
+    console.log(frameResponse);
     res.json(frameResponse);
 });
 
