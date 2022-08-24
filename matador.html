@@ -3,14 +3,1055 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Matador Network</title>
-        <script
+        <!-- <script
             id="gs-sdk"
             src="//www.buildquickbots.com/botwidget/v3/demo/static/js/sdk.js?v=3"
             key="4bb67536-284c-4e29-8715-853a86122819"
             brand="matadorpoc"
             height="500"
             width="500"
-        ></script>
+        ></script> -->
+
+        <script
+            id="gs-sdk"
+            key="4bb67536-284c-4e29-8715-853a86122819"
+            brand="matadorpoc"
+        >
+            var tc;
+            if (typeof tc == "undefined") {
+                tc = {};
+            }
+            var tc = tc || {};
+            tc.lib = (function () {
+                function d(s) {
+                    return btoa(
+                        unescape(encodeURIComponent(JSON.stringify(s)))
+                    );
+                }
+                function r(s) {
+                    return JSON.parse(decodeURIComponent(escape(atob(s))));
+                }
+                function n(s, t, u) {
+                    c(s, t);
+                    b(u);
+                }
+                function c(v, u) {
+                    var t = document.getElementById(v);
+                    try {
+                        if (t) {
+                            t.contentWindow.postMessage({ message: u }, "*");
+                        }
+                    } catch (s) {
+                        e(s, "error");
+                    }
+                }
+                function b(w) {
+                    var v = window.addEventListener
+                        ? "addEventListener"
+                        : "attachEvent";
+                    var t = window[v];
+                    var s = v == "attachEvent" ? "onmessage" : "message";
+                    try {
+                        t(
+                            s,
+                            function (x) {
+                                if (x.data) {
+                                    w(x);
+                                }
+                            },
+                            false
+                        );
+                    } catch (u) {
+                        e("Error :" + u);
+                    }
+                }
+                function a() {
+                    function s() {
+                        return Math.floor((1 + Math.random()) * 65536)
+                            .toString(16)
+                            .substring(1);
+                    }
+                    return s() + s() + "-" + s() + "-" + s() + s();
+                }
+                function g(s) {
+                    s = s.replace(/[\[\]]/g, "\\$&");
+                    var u = new RegExp("[?&]" + s + "(=([^&#]*)|&|#|$)"),
+                        t = u.exec(location.search);
+                    if (!t) {
+                        return null;
+                    }
+                    if (!t[2]) {
+                        return "";
+                    }
+                    return decodeURIComponent(t[2].replace(/\+/g, " "));
+                }
+                function e(t, s) {
+                    try {
+                        if (typeof logstr == "object") {
+                            logstr = JSON.stringify(t);
+                        }
+                        var s = s ? s : "log";
+                        if (window.console) {
+                            window.console.log(t);
+                        }
+                    } catch (u) {}
+                }
+                function f(s) {
+                    if (
+                        typeof s == "undefined" ||
+                        s == "" ||
+                        s == null ||
+                        s == "null"
+                    ) {
+                        return true;
+                    } else {
+                        if (
+                            typeof s == "object" &&
+                            Object.keys(s).length == 0
+                        ) {
+                            return true;
+                        } else {
+                            if (typeof s == "string" && s.trim().length == 0) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                }
+                function p(t, w, u) {
+                    var v = new Date();
+                    v.setTime(v.getTime() + u * 24 * 60 * 60 * 1000);
+                    var s = "expires=" + v.toUTCString();
+                    document.cookie = t + "=" + w + "; " + s;
+                }
+                function k(u) {
+                    var t = u + "=";
+                    var s = document.cookie.split(";");
+                    for (var v = 0; v < s.length; v++) {
+                        var w = s[v];
+                        while (w.charAt(0) == " ") {
+                            w = w.substring(1);
+                        }
+                        if (w.indexOf(t) == 0) {
+                            return w.substring(t.length, w.length);
+                        }
+                    }
+                    return "";
+                }
+                function l() {
+                    if (
+                        /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(
+                            navigator.userAgent
+                        )
+                    ) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                function q(s, t) {
+                    if (typeof s.style.cssText != "undefined") {
+                        s.style.cssText += t;
+                    } else {
+                        s.setAttribute("style", t);
+                    }
+                }
+                function h(w, s, t, u) {
+                    var v;
+                    s = s || 0;
+                    t = t || 5;
+                    u = u || 50;
+                    v = setInterval(function () {
+                        var x = s / 100;
+                        s = s + t;
+                        if (x > 1 || x < 0) {
+                            w.style.display = "block";
+                            clearInterval(v);
+                            return;
+                        }
+                        w.style.opacity = x;
+                        w.style.filter = "alpha(opacity=" + x * 100 + ")";
+                    }, u);
+                }
+                function j() {
+                    try {
+                        return new XMLHttpRequest();
+                    } catch (s) {}
+                    try {
+                        return new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (s) {}
+                    try {
+                        return new ActiveXObject("Msxml2.XMLHTTP");
+                    } catch (s) {}
+                    return null;
+                }
+                function m(t, s) {
+                    var u = j();
+                    u.onreadystatechange = function () {
+                        if (this.readyState == 4) {
+                            if (typeof s == "function") {
+                                s(u);
+                            }
+                        }
+                    };
+                    if (t.headers) {
+                        for (header in t.headers) {
+                            u.setRequestHeader(header, t.headers[header]);
+                        }
+                    }
+                    u.open(t.method, t.url);
+                    u.send();
+                    return u.onreadystatechange();
+                }
+                var o = {
+                    persistanceMenu:
+                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 15" width="24" height="24"><path fill=CHANGECOLOR d="M186.5,192.16h24v2.5h-24Z" transform="translate(-186.5 -192.16)"></path><path fill=CHANGECOLOR d="M186.5,198.41h24v2.5h-24Z" transform="translate(-186.5 -192.16)"></path><path fill=CHANGECOLOR d="M186.5,204.66h24v2.5h-24Z" transform="translate(-186.5 -192.16)"></path></svg>',
+                    sendIcon:
+                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g><path fill=CHANGECOLOR d="M187.11,200.95v-.23c0-.05,0-.11,0-.16a.84.84,0,0,1,.42-.47l5.74-3.31,16.24-9.37a2,2,0,0,1,.61-.29h.23a.83.83,0,0,1,.62.43,1.74,1.74,0,0,1,.11.31v.2l-.06.33-.37,2.21-.37,2.21L210,195l-.37,2.21-.38,2.29-.37,2.21-.37,2.21-.37,2.21-.4,2.39a1.08,1.08,0,0,1-.18.51.87.87,0,0,1-1.06.26l-6-2.43a.08.08,0,0,0-.11,0l-1,1.22-2.2,2.69a.76.76,0,0,1-.35.25l-.19.05h-.25a.86.86,0,0,1-.73-.86q0-2.3,0-4.61a.15.15,0,0,1,0-.09l2.5-3.07,4.43-5.42,4.36-5.34.19-.24c-.17.13-.33.26-.48.4l-3.23,2.79-3.72,3.22-3.35,2.9-3.44,3a.08.08,0,0,1-.11,0l-3.71-1.52-1.6-.66a.68.68,0,0,1-.39-.4C187.15,201.11,187.14,201,187.11,200.95Z" transform="translate(-187.11 -187.13)"></path></g></svg>',
+                    minimize:
+                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 11"><path fill=CHANGECOLOR d="M200,205.15l8.1-8.49a1.25,1.25,0,0,0-1.81-1.73l-7.21,7.55-7.46-7.59c-1.13-1.15-2.94.58-1.81,1.73l8.38,8.53A1.33,1.33,0,0,0,200,205.15Z" transform="translate(-189.5 -194.51)"></path></svg>',
+                    attachment:
+                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.25 19.5"><g><path fill=CHANGECOLOR d="M203,189.87c.34.08.69.12,1,.23a5,5,0,0,1,2,8.1c-1.09,1.18-2.22,2.31-3.34,3.46q-3.1,3.21-6.2,6.42a3.86,3.86,0,0,1-2.37,1.26l-.07,0h-.74l-.43-.1a3.8,3.8,0,0,1-1.79-6.24l.18-.19,9.38-9.71a2.68,2.68,0,0,1,2.23-.87,2.46,2.46,0,0,1,2.16,2.74,3,3,0,0,1-.86,1.81l-7.62,7.89a.61.61,0,0,1-.69.21.62.62,0,0,1-.25-1l.15-.16,7.57-7.84a1.74,1.74,0,0,0,.53-1.12,1.24,1.24,0,0,0-1.68-1.29,1.72,1.72,0,0,0-.65.41q-4.76,4.9-9.5,9.83a2.57,2.57,0,0,0,.88,4.23,2.38,2.38,0,0,0,2.39-.45,2.66,2.66,0,0,0,.26-.24l9.51-9.84a3.75,3.75,0,0,0,1.09-2.9,3.65,3.65,0,0,0-2.86-3.4,3.44,3.44,0,0,0-3.3,1.05l-7.72,8-.14.15a.57.57,0,0,1-.8,0,.62.62,0,0,1,0-.84l.13-.14q3.81-3.94,7.62-7.89a4.8,4.8,0,0,1,3-1.55l.09,0Z" transform="translate(-190.12 -189.87)"></path></g></svg>',
+                    microPhone:
+                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8.18 11.08"><path fill=CHANGECOLOR d="M200.49,199.51V196a1.73,1.73,0,0,0-1.74-1.75,1.72,1.72,0,0,0-1.24.51A1.67,1.67,0,0,0,197,196v3.5a1.77,1.77,0,0,0,1.76,1.75,1.65,1.65,0,0,0,1.23-.52,1.7,1.7,0,0,0,.51-1.23Zm.42,2.11a3.08,3.08,0,0,1-2.16.85,3.12,3.12,0,0,1-2.17-.85,2.73,2.73,0,0,1-.93-2.11h-1a3.7,3.7,0,0,0,1,2.57,4.1,4.1,0,0,0,2.48,1.34v1.91h1.18v-1.91a4.13,4.13,0,0,0,2.48-1.33,3.68,3.68,0,0,0,1-2.58h-1A2.75,2.75,0,0,1,200.92,201.61Z" transform="translate(-194.67 -194.26)"></path></svg>',
+                    persistanceLeftArrow:
+                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.94 19.02" width="18" height="18"><path fill=CHANGECOLOR d="M193.88,200.06l8.44,8.11a1.25,1.25,0,0,0,1.72-1.81l-7.52-7.22,7.55-7.47c1.15-1.13-.58-2.94-1.72-1.81l-8.48,8.39A1.33,1.33,0,0,0,193.88,200.06Z" transform="translate(-193.53 -189.5)"></path></svg>',
+                    persistanceRightArrow:
+                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.94 19.02" width="18" height="18"><path fill=CHANGECOLOR d="M205.11,229l-8.44-8.11a1.25,1.25,0,0,0-1.72,1.81l7.52,7.22-7.55,7.47c-1.15,1.13.58,2.94,1.72,1.81l8.48-8.39A1.33,1.33,0,0,0,205.11,229Z" transform="translate(-194.53 -220.49)"></path></svg>',
+                    persistanceClose:
+                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.8 18.19" width="18" height="18"><path fill=CHANGECOLOR d="M199.43,200.1l7.16-7.74c1-1.06-.61-2.64-1.6-1.58l-6.38,6.88-6.6-6.92c-1-1.05-2.6.53-1.6,1.58l7.41,7.77A1.15,1.15,0,0,0,199.43,200.1Z" transform="translate(-190.1 -190.4)"></path><path fill=CHANGECOLOR d="M197.57,198.92l-7.16,7.71c-1,1.06.61,2.64,1.6,1.57l6.38-6.86,6.6,6.9c1,1,2.6-.53,1.6-1.57l-7.41-7.75A1.15,1.15,0,0,0,197.57,198.92Z" transform="translate(-190.1 -190.4)"></path></svg>',
+                };
+                return {
+                    events: { init: n, send: c, receive: b },
+                    JsonToString: d,
+                    StringToJson: r,
+                    uuid: a,
+                    getUrlParam: g,
+                    log: e,
+                    isEmpty: f,
+                    setCookie: p,
+                    getCookie: k,
+                    bw_appear: h,
+                    mobileDevice: l,
+                    applyCssSettings: q,
+                    xhrReq: m,
+                    icons: o,
+                };
+            })();
+            tc.funcs = (function () {
+                var B = false,
+                    J = false,
+                    m = "",
+                    d = window.location.origin,
+                    l = undefined,
+                    H = undefined,
+                    E = undefined,
+                    C = undefined,
+                    o = undefined,
+                    p = false,
+                    w = undefined,
+                    N = "3",
+                    c = "anon:" + tc.lib.uuid(),
+                    I = "User",
+                    A = "//botwidget.gupshup.io/ChatChannel",
+                    r = "//www.buildquickbots.com";
+                function O(P, Q) {
+                    if (Q && Q.length > 0) {
+                        return Q;
+                    } else {
+                        return P;
+                    }
+                }
+                function M() {
+                    var P = {
+                        openMode: {
+                            text: "Matador Network",
+                            height: 460,
+                            width: 400,
+                        },
+                        closeMode: {
+                            text: "Matador Network",
+                            width: 250,
+                            displayType: "circular",
+                        },
+                        common: {
+                            logo: "/images/icon.jepg",
+                            imgDispType: "circular",
+                            bgColor: "#765999",
+                            fontSize: 16,
+                            fontColor: "#ffffff",
+                        },
+                        content: {
+                            bot: "/images/icon.jepg",
+                            botBubbleColor: "#f5f5f5",
+                            botFontColor: "#797979",
+                            user: "/images/icon.jepg",
+                            userBubbleColor: "#765999",
+                            userFontColor: "#ffffff",
+                            pageTitle: "Matador Network",
+                            fontSize: 14,
+                            fontFamily: "sans-serif",
+                        },
+                        config: {
+                            persistenceMenu:
+                                '{"disableinput":false,"menu":[{"title":"Level1 - Element1","type":"nested","menu":[{"title":"Level2 - Element1","type":"text"},{"title":"Level2 - Element2","type":"nested","menu":[{"title":"Level3 - Element1","type":"text"}]},{"title":"Level2 - Element4","type":"nested","menu":[{"title":"Level3 - Element1","type":"text"}]},{"title":"Level2 - Element5","type":"text"}]},{"title":"Level2 - Element4.1","type":"text"}]}',
+                            perMenuImg: "",
+                            attachment: "Yes",
+                            widgetType: "Text",
+                            msgEnc: "No",
+                            webView: "Yes",
+                            RDStatus: "No",
+                            isResponsive: "No",
+                        },
+                    };
+                    return P;
+                }
+                function j(Q) {
+                    var X = Q.minimisedScreen;
+                    var W = Q.chatScreen;
+                    var V = Q.contentScreen;
+                    var P = Q.commonWidget;
+                    var U = Q.config;
+                    if (!X || !W || !V || !P) {
+                        if (!Q.openMode) {
+                            throw new Error(
+                                "Wrong settings, not old or new settings"
+                            );
+                        }
+                        return Q;
+                    }
+                    var S = {
+                        text: O("Matador Network", X.minText),
+                        height: O(500, P.height),
+                        width: O(350, P.width),
+                    };
+                    var T = {
+                        text: O("Support", X.minText),
+                        width: O(200, X.width),
+                    };
+                    var R = {
+                        logo: O(
+                            "https://www.gupshup.io/images/botwidget/ic_dummy_chat_g.png",
+                            P.logo
+                        ),
+                        imgDispType: O("rectangular", P.widgetType),
+                        bgColor: O("#fbfbfb", P.bgColor),
+                        fontSize: O(16, P.titleTextFont),
+                        fontColor: O("#2d0101", P.textColor),
+                    };
+                    var aa = {
+                        bot: O(
+                            "https://www.gupshup.io/images/botwidget/ic_bot.png",
+                            P.bot
+                        ),
+                        botBubbleColor: O("#383838", V.botBgColor),
+                        botFontColor: O("#adff00", V.botColor),
+                        user: O(
+                            "https://www.gupshup.io/images/botwidget/ic_user.png",
+                            P.user
+                        ),
+                        userBubbleColor: O("#ffffff", V.userBgColor),
+                        userFontColor: O("#0400bd", V.userColor),
+                        pageTitle: O("Chat Bot", P.pageTitle),
+                        fontSize: O(14, V.customfontSize),
+                        fontFamily: O("sans-serif", V.fontFamily),
+                    };
+                    var Z = {
+                        persistenceMenu: O("", P.persistenceMenu),
+                        perMenuImg: O(
+                            "http://www.buildquickbots.com/botwidget/v3/static/img/ic_persistence_menu.png",
+                            P.perMenuImg
+                        ),
+                        widgetType: O("Voice", P.widgetType),
+                        msgEnc: O("No", P.msgEncryption),
+                        webView: O("Yes", P.webView),
+                        RDStatus: O("No", P.RDStatus),
+                        isResponsive: O("No", P.isResponsive),
+                        allowHtmlFromBot: O("Yes", P.allowHtmlFromBot),
+                    };
+                    if (U && U.attachment) {
+                        Z.attachment = O("Yes", U.attachment);
+                    }
+                    var Y = {
+                        openMode: S,
+                        closeMode: T,
+                        common: R,
+                        content: aa,
+                        config: Z,
+                    };
+                    return Y;
+                }
+                function x() {
+                    return r + "/botwidget/v3/echat/mobile.html";
+                }
+                function y(R, Q, P) {
+                    var S = document.createElement(R);
+                    if (Q) {
+                        S.id = Q;
+                    }
+                    if (P) {
+                        S.className = P;
+                    }
+                    return S;
+                }
+                function D(Q, R) {
+                    if (typeof R == "object") {
+                        var P = Object.keys(R);
+                        for (i in R) {
+                            Q.setAttribute(i, R[i]);
+                        }
+                    }
+                }
+                function K(P, Q) {
+                    if (typeof P.style.cssText != "undefined") {
+                        P.style.cssText += Q;
+                    } else {
+                        P.setAttribute("style", Q);
+                    }
+                }
+                function k(Q) {
+                    if (arguments.length > 1) {
+                        for (var P = 1; P < arguments.length; P++) {
+                            Q.appendChild(arguments[P]);
+                        }
+                    }
+                }
+                function e(P) {
+                    var S = new Array();
+                    S = document.getElementsByClassName("tc-widget");
+                    if (P) {
+                        a();
+                        for (var Q = 0; Q < S.length; Q++) {
+                            var R = S[Q];
+                            R.classList.remove("hidewidget");
+                            R.classList.remove("widget-fadeOut");
+                            R.style.display = "block";
+                        }
+                        document.getElementById("widget-close").style.display =
+                            "block";
+                        tc.lib.events.send("iframe_widget", "open");
+                        if (B && J) {
+                            tc.lib.events.send("iframe_widget", "play");
+                        } else {
+                            if (m) {
+                                window.clearInterval(m);
+                            }
+                            m = setInterval(function () {
+                                if (B && J) {
+                                    tc.lib.events.send("iframe_widget", "play");
+                                    clearInterval(m);
+                                }
+                            }, 1000);
+                        }
+                        if (!tc.devbox.isIframeInitialized) {
+                            document
+                                .getElementById("iframe_widget")
+                                .setAttribute("src", tc.devbox.iframeUrl);
+                            tc.devbox.isIframeInitialized = true;
+                        }
+                    } else {
+                        for (var Q = 0; Q < S.length; Q++) {
+                            var R = S[Q];
+                            if (
+                                R.style.display != "none" &&
+                                R.getAttribute("id") != "widget-open"
+                            ) {
+                                R.classList.add("hidewidget");
+                                R.classList.add("widget-fadeOut");
+                                setTimeout(function () {
+                                    document.getElementById(
+                                        "widget-close"
+                                    ).style.display = "none";
+                                }, 1000);
+                                setTimeout(function () {
+                                    document.getElementById(
+                                        "widget"
+                                    ).style.display = "none";
+                                }, 1000);
+                            }
+                        }
+                        document.getElementById("widget-open").style.display =
+                            "block";
+                        tc.lib.events.send("iframe_widget", "pause");
+                        tc.lib.events.send("iframe_widget", "close");
+                    }
+                }
+                function a(Q) {
+                    var P = document.getElementById("widget");
+                    var R = document
+                        .getElementById("widget-open")
+                        .querySelector("span.bedge");
+                    if (
+                        Q < 1 ||
+                        !(P.style.display == "none" || P.style.display == "") ||
+                        isNaN(Q)
+                    ) {
+                        R.innerText = 0;
+                        R.style.display = "none";
+                        return false;
+                    } else {
+                        R.innerText = parseInt(Q) + parseInt(R.innerText);
+                        R.style.display = "block";
+                    }
+                }
+                function F() {
+                    var R = "&domain=" + d;
+                    var T = "&timestamp=" + new Date().getTime();
+                    var P = {
+                        botkey: l,
+                        sender: z(),
+                        common: {
+                            imgDispType: C.common.imgDispType,
+                            bgColor: C.common.bgColor,
+                            bgImage: C.content.bgImage,
+                            fontColor: C.common.fontColor,
+                            isMobile: tc.lib.mobileDevice(),
+                            ref: tc.lib.getUrlParam("ref"),
+                            width: C.openMode.width,
+                            height: C.openMode.height,
+                        },
+                        content: C.content,
+                        config: C.config,
+                    };
+                    if (o && o.wsurl) {
+                        P.devbox = { enc: false, wsurl: o.wsurl };
+                    }
+                    var S = tc.lib.JsonToString(P);
+                    var Q = x() + "?data=" + S + R + T;
+                    return Q;
+                }
+                function n() {
+                    var R = "&domain=" + d;
+                    var T = "&timestamp=" + new Date().getTime();
+                    var P = {
+                        botkey: l,
+                        contentScreen: C.contentScreen,
+                        sender: z(),
+                        persistenceMenu: C.commonWidget.persistenceMenu,
+                        common: {
+                            userImg: C.commonWidget.user,
+                            botImg: C.commonWidget.bot,
+                            msgEncyption: C.commonWidget.msgEncryption,
+                            widgetType: C.commonWidget.widgetType,
+                            pageTitle: C.commonWidget.pageTitle,
+                            bgImage: C.commonWidget.bgImage,
+                            isMobile: tc.lib.mobileDevice(),
+                            ref: tc.lib.getUrlParam("ref"),
+                            RDStatus: C.commonWidget.RDStatus,
+                            webView: C.commonWidget.webView,
+                            allowHtmlFromBot: C.commonWidget.allowHtmlFromBot,
+                            perMenuImg: C.commonWidget.perMenuImg,
+                        },
+                    };
+                    if (C.config && C.config.attachment == "No") {
+                        P.common.attachment = false;
+                    }
+                    if (o && o.wsurl) {
+                        P.devbox = { enc: false, wsurl: o.wsurl };
+                    }
+                    var S = tc.lib.JsonToString(P);
+                    var Q = x() + "?data=" + S + R + T;
+                    return Q;
+                }
+                function t(R) {
+                    var P = F();
+                    if (H) {
+                        if (c.indexOf("anon:") != -1) {
+                            P =
+                                "//gipw.gupshup.io/wpp/brand/" +
+                                H +
+                                "?channel=widget";
+                        } else {
+                            P =
+                                "//gipw.gupshup.io/wpp/brand/" +
+                                H +
+                                "?channel=widget&cUserId=" +
+                                c;
+                        }
+                        if (E) {
+                            P = P + "&refKey=" + E;
+                        }
+                    }
+                    var Q = document.createElement("iframe");
+                    tc.devbox.iframeUrl = P;
+                    Q.setAttribute("id", "iframe_widget");
+                    var R = document.getElementById(R);
+                    R.innerHTML = "";
+                    R.appendChild(Q);
+                }
+                function s() {
+                    var P = F();
+                    if (H) {
+                        if (c.indexOf("anon:") != -1) {
+                            P =
+                                "//gipw.gupshup.io/wpp/brand/" +
+                                H +
+                                "?channel=widget";
+                        } else {
+                            P =
+                                "//gipw.gupshup.io/wpp/brand/" +
+                                H +
+                                "?channel=widget&cUserId=" +
+                                c;
+                        }
+                        if (E) {
+                            P = P + "&refKey=" + E;
+                        }
+                    }
+                    window.open(P, "_blank");
+                }
+                function u(Q) {
+                    var P = y(
+                        "div",
+                        "widget-open",
+                        "tc-widget widget-type rectangular-widget"
+                    );
+                }
+                function g(ah) {
+                    tc.lib.applyCssSettings(ah, "display:none;");
+                    var ad = y(
+                        "div",
+                        "widget-close",
+                        "tc-widget widget-fadeIn"
+                    );
+                    var T;
+                    var ac = y("div", "widget", "tc-widget widget-fadeIn");
+                    var am = y("div", undefined, "logo-img-icon");
+                    var an = y("img");
+                    var aa = y("span", "max-msg");
+                    var Z = y("span", undefined, "right");
+                    D(an, { src: C.common.logo, width: 45, height: 45 });
+                    var W = new RegExp("CHANGECOLOR", "g");
+                    D(Z, { onClick: "tc.funcs.toggleWidget(false)" });
+                    aa.innerText = C.openMode.text;
+                    Z.innerHTML = tc.lib.icons.minimize.replace(
+                        W,
+                        C.common.fontColor
+                    );
+                    var ak = am.cloneNode(true);
+                    var R = y("span", "min-msg");
+                    var P = y("span", undefined, "bedge");
+                    var X = an.cloneNode(true);
+                    D(X, { width: 45, height: 45 });
+                    P.innerText = "0";
+                    var V = C.common;
+                    var U = C.content;
+                    var ag = C.openMode;
+                    var ab = C.closeMode;
+                    var af = C.config;
+                    var S = "";
+                    if (ab.displayType == "circular") {
+                        T = y(
+                            "div",
+                            "widget-open",
+                            "tc-widget widget-type circular-widget"
+                        );
+                        T.setAttribute("title", ab.text);
+                        R.style.display = "none";
+                        S = "border-radius: 50%;";
+                    } else {
+                        T = y(
+                            "div",
+                            "widget-open",
+                            "tc-widget widget-type rectangular-widget"
+                        );
+                        R.innerText = ab.text;
+                        S =
+                            "width:" +
+                            parseInt(ab.width, 10) +
+                            "px;border-radius: 4px 4px 0px 0px;";
+                    }
+                    D(T, { onClick: "tc.funcs.toggleWidget(true)" });
+                    k(ah, ad, T, ac);
+                    k(ad, am, aa, Z);
+                    k(am, an);
+                    k(T, ak, R, P);
+                    k(ak, X);
+                    var aj = "vertical-align: top;";
+                    var Q = "background-color: " + V.bgColor,
+                        al =
+                            "width: " +
+                            parseInt(ag.width, 10) +
+                            "px;height: " +
+                            parseInt(ag.height, 10) +
+                            "px;",
+                        ae =
+                            "bottom:" +
+                            parseInt(ag.height, 10) +
+                            "px;;width: " +
+                            parseInt(ag.width, 10) +
+                            "px;border-radius: 4px 4px 0px 0px;";
+                    tc.lib.applyCssSettings(an, aj);
+                    tc.lib.applyCssSettings(ad, Q);
+                    var Y =
+                        "font-size:" +
+                        V.fontSize +
+                        "px;color:" +
+                        V.fontColor +
+                        ";";
+                    tc.lib.applyCssSettings(aa, Y);
+                    tc.lib.applyCssSettings(R, Y);
+                    tc.lib.applyCssSettings(T, Q);
+                    tc.lib.applyCssSettings(ac, al);
+                    tc.lib.applyCssSettings(ad, ae);
+                    tc.lib.applyCssSettings(T, S);
+                    if (af.isResponsive == "Yes") {
+                        var ai = document.createElement("meta");
+                        ai.name = "viewport";
+                        ai.content =
+                            "width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0";
+                        document
+                            .getElementsByTagName("head")[0]
+                            .appendChild(ai);
+                    }
+                    if (V.imgDispType == "circular") {
+                        am.style.borderRadius = "40px";
+                        ak.style.borderRadius = "40px";
+                    }
+                    window.addEventListener("focus", function () {
+                        if (ac && ac.style && ac.style.display == "block") {
+                            tc.lib.events.send("iframe_widget", "topFocus");
+                        }
+                    });
+                    window.addEventListener("blur", function () {
+                        if (ac && ac.style && ac.style.display == "block") {
+                            tc.lib.events.send("iframe_widget", "topBlur");
+                        }
+                    });
+                }
+                function b(ac) {
+                    tc.lib.applyCssSettings(ac, "display:none;");
+                    var R = y("div", "widget-close", "tc-widget widget-fadeIn");
+                    var W;
+                    var P = y("div", undefined, "logo-img-icon");
+                    var T = y("img");
+                    var Z = y("span", "min-msg");
+                    var Q = y("div", "widget", "tc-widget widget-fadeIn");
+                    D(T, { src: C.common.logo, width: 45, height: 45 });
+                    var S = C.common;
+                    var U = C.content;
+                    var Y = C.closeMode;
+                    var V = C.config;
+                    var ab = "";
+                    if (Y.displayType == "circular") {
+                        W = y(
+                            "div",
+                            "widget-open",
+                            "tc-widget widget-type circular-widget"
+                        );
+                        W.setAttribute("title", Y.text);
+                        Z.style.display = "none";
+                        ab =
+                            "background-color: " +
+                            S.bgColor +
+                            ";border-radius: 50%;";
+                    } else {
+                        W = y(
+                            "div",
+                            "widget-open",
+                            "tc-widget widget-type rectangular-widget"
+                        );
+                        Z.innerText = Y.text;
+                        ab =
+                            "background-color: " +
+                            S.bgColor +
+                            ";width:" +
+                            parseInt(Y.width, 10) +
+                            "px;border-radius: 4px 4px 0px 0px;";
+                    }
+                    D(W, { onClick: "supportChatMobile()" });
+                    k(ac, R, W, Q);
+                    k(W, P, Z);
+                    k(P, T);
+                    var X = "vertical-align: top;";
+                    tc.lib.applyCssSettings(T, X);
+                    tc.lib.applyCssSettings(W, ab);
+                    tc.lib.applyCssSettings(
+                        Z,
+                        "font-size:" +
+                            S.fontSize +
+                            "px;color:" +
+                            S.fontColor +
+                            ";"
+                    );
+                    if (V.isResponsive == "Yes") {
+                        var aa = document.createElement("meta");
+                        aa.name = "viewport";
+                        aa.content =
+                            "width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0";
+                        document
+                            .getElementsByTagName("head")[0]
+                            .appendChild(aa);
+                    }
+                    if (S.imgDispType == "circular") {
+                        P.style.borderRadius = "40px";
+                    }
+                }
+                function h(P) {
+                    if (typeof P == "string") {
+                        tc.lib.events.send(P, "startchatevent");
+                    } else {
+                        tc.lib.events.send("iframe_widget", "startchatevent");
+                    }
+                }
+                function z() {
+                    var P = {
+                        channel: "widget",
+                        sender: { id: c, name: I },
+                        recipient: { id: l, name: "Bot" },
+                        message: { text: "hi", type: "text" },
+                    };
+                    return P;
+                }
+                function q(S) {
+                    var P = M();
+                    var Q = undefined;
+                    if (S) {
+                        try {
+                            Q = j(JSON.parse(unescape(S)));
+                            return Q;
+                        } catch (R) {
+                            tc.lib.log(
+                                "uiSettings not funnd. Taking default settings."
+                            );
+                            return P;
+                        }
+                    }
+                }
+                function L(Q, P) {
+                    if (p) {
+                        return false;
+                    }
+                    B = true;
+                    if (!Q.botkey && !l) {
+                        console.log("Botkey not found");
+                        return false;
+                    } else {
+                        if (Q.botkey) {
+                            l = Q.botkey;
+                        }
+                    }
+                    if (Q.userObj && Q.userObj.sender && Q.userObj.sender.id) {
+                        c = Q.userObj.sender.id;
+                        I = Q.userObj.sender.name;
+                    }
+                    o = Q;
+                    if (Q.domain) {
+                        r = Q.domain;
+                    }
+                    C = q(Q.appUISetting);
+                    if (!C) {
+                        C = {
+                            openMode: {
+                                text: "Matador Network",
+                                height: 440,
+                                width: 400,
+                            },
+                            closeMode: {
+                                text: "Matador Network",
+                                width: 250,
+                                displayType: "circular",
+                            },
+                            common: {
+                                logo: "/images/icon.jpeg",
+                                imgDispType: "circular",
+                                bgColor: "#765999",
+                                fontSize: 16,
+                                fontColor: "#ffffff",
+                            },
+                            content: {
+                                bot: "/images/icon.jpeg",
+                                botBubbleColor: "#f5f5f5",
+                                botFontColor: "#797979",
+                                user: "/images/icon.jpeg",
+                                userBubbleColor: "#765999",
+                                userFontColor: "#ffffff",
+                                pageTitle: "Matador Network",
+                                fontSize: 14,
+                                fontFamily: "sans-serif",
+                            },
+                            config: {
+                                persistenceMenu:
+                                    '{"disableinput":false,"menu":[{"title":"Level1 - Element1","type":"nested","menu":[{"title":"Level2 - Element1","type":"text"},{"title":"Level2 - Element2","type":"nested","menu":[{"title":"Level3 - Element1","type":"text"}]},{"title":"Level2 - Element4","type":"nested","menu":[{"title":"Level3 - Element1","type":"text"}]},{"title":"Level2 - Element5","type":"text"}]},{"title":"Level2 - Element4.1","type":"text"}]}',
+                                perMenuImg: "",
+                                attachment: "Yes",
+                                widgetType: "Text",
+                                msgEnc: "No",
+                                webView: "Yes",
+                                RDStatus: "No",
+                                isResponsive: "No",
+                            },
+                        };
+                    }
+                    if (P instanceof Function) {
+                        p = true;
+                        return P();
+                    }
+                    var R = y("div", "supportchatwidget");
+                    document.body.appendChild(R);
+                    if (tc.lib.mobileDevice()) {
+                        b(R);
+                    } else {
+                        g(R);
+                        t("widget");
+                        w = function (S) {
+                            if (S) {
+                                if (S.data.event == "ready") {
+                                    J = true;
+                                    tc.lib.events.send("iframe_widget", "data");
+                                } else {
+                                    if (S.data.event == "bw") {
+                                        if (S.data.message == "hide") {
+                                            tc.lib.log("Disappering... Bye");
+                                            tc.lib.applyCssSettings(
+                                                document.querySelector(
+                                                    "#supportchatwidget"
+                                                ),
+                                                "display: none;"
+                                            );
+                                        } else {
+                                            if (
+                                                typeof S.data.message &&
+                                                S.data.message.newMsg
+                                            ) {
+                                                a(S.data.message.newMsg);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                        tc.lib.events.init("iframe_widget", "play", w);
+                    }
+                    setTimeout(function () {
+                        document.getElementById(
+                            "supportchatwidget"
+                        ).style.display = "block";
+                    }, 1000);
+                    document.getElementById("widget-open").style.display =
+                        "block";
+                    p = true;
+                }
+                function f(P) {
+                    p = P;
+                }
+                function G(P) {
+                    C = P;
+                }
+                function v(U, P) {
+                    var Y = document.getElementById("gs-sdk");
+                    var W;
+                    if (Y) {
+                        W = Y.getAttribute("callback");
+                    } else {
+                        W = "tcAsyncInit";
+                    }
+                    if (!Y) {
+                        if (window[W] instanceof Function) {
+                            window[W]();
+                        }
+                        console.log("Id not found in script");
+                        return false;
+                    }
+                    if (!U.getElementById("gs-css") && W != "localhost") {
+                        var S = U.getElementsByTagName("script")[0];
+                        css = U.createElement("link");
+                        css.id = P;
+                        css.type = "text/css";
+                        css.rel = "stylesheet";
+                        var V = new Date().getTime();
+                        css.href =
+                            r +
+                            "/botwidget/v3/demo/static/css/style.css?ts=" +
+                            V;
+                        S.parentNode.insertBefore(css, S);
+                    }
+                    var R = Y.getAttribute("key");
+                    var Q = Y.getAttribute("brand");
+                    var T = Y.getAttribute("ref");
+                    if (R) {
+                        l = R;
+                    }
+                    if (Q) {
+                        H = Q;
+                    }
+                    if (T) {
+                        E = T;
+                    }
+                    if (window[W] instanceof Function) {
+                        window[W]({
+                            init: L,
+                            toggleWidget: e,
+                            getRedirectUrl: F,
+                            supportChatMobile: s,
+                            startchat: h,
+                            nconfig: G,
+                            resetWidgetInit: f,
+                        });
+                    } else {
+                        if (!R) {
+                            console.log("Botkey attribute not found");
+                            return false;
+                        }
+                        var X = {
+                            method: "GET",
+                            url: A + "/api/bot/" + l + "/botconfig",
+                        };
+                        tc.lib.xhrReq(X, function (Z) {
+                            var ab = {};
+                            if (Z.status < 300 && Z.response) {
+                                try {
+                                    C = JSON.parse(Z.response);
+                                    if (!tc.lib.isEmpty(C["uisettings_" + N])) {
+                                        ab.appUISetting = C.uisettings_3;
+                                        N = C.version;
+                                    } else {
+                                        if (!tc.lib.isEmpty(C.uisettings)) {
+                                            tc.lib.log(
+                                                "Please re-deploy the widget"
+                                            );
+                                        }
+                                    }
+                                } catch (aa) {
+                                    tc.lib.log(
+                                        "uiSettings not funnd. Please save the settings first at widget config."
+                                    );
+                                }
+                                L(ab);
+                            } else {
+                                console.log("Error in get");
+                            }
+                        });
+                    }
+                }
+                setTimeout(function () {
+                    v(document, "gs-css");
+                }, 200);
+                return {
+                    init: L,
+                    toggleWidget: e,
+                    getRedirectUrl: F,
+                    supportChatMobile: s,
+                    startchat: h,
+                    nconfig: G,
+                    resetWidgetInit: f,
+                };
+            })();
+            toggleWidget = tc.funcs.toggleWidget;
+            tc.init = tc.funcs.init;
+            var supportChatMobile = tc.funcs.supportChatMobile;
+            tc.devbox = {
+                startchat: tc.funcs.startchat,
+                isIframeInitialized: false,
+                iframeUrl: "",
+            };
+        </script>
+
+        <!-- <script
+            id="gs-sdk"
+            src="//www.buildquickbots.com/botwidget/v3/demo/static/js/sdk.js?v=3"
+            key="4f018050-a3d5-4fb1-b0b6-eb9a04f8a502"
+        ></script> -->
     </head>
     <body>
         <img src="/images/matador.png" />
@@ -31,4 +1072,19 @@
             color: white;
         }
     </style> -->
+    <style>
+        #widget {
+            width: 400px !important;
+            /* height: 420px !important; */
+        }
+
+        #widget-close {
+            width: 400px !important;
+            /* height: 420px !important; */
+        }
+
+        .group-icon {
+            background-image: url("/images/icon.jpeg") !important;
+        }
+    </style>
 </html>
