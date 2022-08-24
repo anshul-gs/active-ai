@@ -2,9 +2,14 @@ const express = require("express");
 const router = express.Router();
 const axios = require('axios');
 const { readPdf } = require('../util');
+const path = require('path')
 
 router.get('/', (req, res) => {
     res.send("Welcome to Meluka Honey - Active Bot!");
+});
+
+router.get('/matador', (req, res) => {
+    res.sendFile(path.resolve('matador.html'));
 });
 
 router.post('/getNumber', async (req, res) => {

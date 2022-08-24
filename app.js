@@ -17,6 +17,7 @@ app.use("/product", productRoutes);
 app.use("/cart", cartRoutes);
 app.use("/order", orderRoutes);
 app.use("/transaction", transactionRoutes);
+app.use(express.static(__dirname + '/public'));
 
 var port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', (err) => {
